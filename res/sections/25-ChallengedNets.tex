@@ -1,0 +1,62 @@
+\newpage
+\section{Challenged Networks}
+
+Challenged networks are systems that deals with links that have
+characteristics very different from the standard ones:
+
+\begin{itemize}
+  \item satellites links - they are sensitive to meteorological conditions
+and they have a long RTT)
+  \item 3G, 4G cellular systems
+  \item WiFi (802.11) WiMax (802.16)
+  \item Fiber Optic Links
+  \item car-to-car
+  \item interplanetary net
+\end{itemize}
+
+Due to packet losses, dupAcks, timeouts etc \dots the link is never used
+to his full potential.
+Disruptive/intermitted links (con interferenze) : with this kind of links
+there is no fixed infrastructure, no antenna and no cable.
+In these cases it is not possible to use the usual protocols.
+
+Many opportunities \dots
+
+\begin{itemize}
+  \item ubiquitous computing
+  \item back-up networks (after-disaster recovery, fast network deployment)
+  \item Always-on connection
+  \item Very fast connection
+  \item Traffic control
+  \item space communication
+\end{itemize}
+
+\dots and many issues:
+
+\begin{itemize}
+  \item Great increase of RTT
+  \item There is a PER (Packet Error Rate) not reducible (average: 0-10%)
+  \item Redundancy is needed
+  \item The acceleration speed is slow
+\end{itemize}
+
+There is an interest in exploiting disruptive links (no end-to-end
+connectivity) - opportunistic communication.
+
+TCP is not able to distinguish between losses due to errors in links or due
+to congestion.
+
+TCP has several timers that would get crazy in case of intermitted/disruptive
+links.
+
+Different algorithms are used to address different problems:
+
+\begin{itemize}
+  \item large RTT
+  \item high PER
+  \item high speed
+  \item disruptive links
+  \item \dots
+\end{itemize}
+
+
