@@ -1,0 +1,67 @@
+\section{TCP and Wireless}
+
+Wireless is less reliable than cable, and losses are common. In TCP though,
+every losses is treated as a congestion. This causes:
+\begin{itemize}
+\item Multiple cwnd\footnote{Congestion window} reductions
+\item Disconnections due timeouts
+\item Bandwidth waster
+\end{itemize}
+
+This has also and impact on multi-hops paths: it takes twice the time to
+transmit data with two hops, because is not possible to forward the message at
+the same time, but you have to wait, otherwise you'll end up with a collision.
+Increasing number of hops beyond three allows simultaneouse transmission on more
+than one link, however, degradation continues due to contentions between TCP
+data and ACKs traveling in opposite directions.
+
+With movement, throughtput degrades, because there is a possibility of link
+breakage and route failure.
+
+To solve these issues, we could adopt a different way of seeing the network:
+\textit{conneciton split} and \textit{pure end-to-end} connection.
+
+\paragraph*{Connection split} The network is split, having local retransmission
+and quick actions on the wireless link.
+Examples:
+\begin{itemize}
+\item I-TCP
+\item M-TCP
+\item Proxy
+\item Snoop Protocol
+\end{itemize}
+
+\subparagraph*{Snoop Protocol} In this protocol, there is a tower with a big
+buffer keeping a list of ACKs: it handles dupAcks/lost packages, without
+stopping the sender from sending new data to the tower.
+Considerations:
+\begin{itemize}
+\item Pro:
+  \begin{itemize}
+  \item Local (and timely) loss recovery
+  \item End-to-end semantics preservation (almost)
+  \end{itemize}
+\item Cons:
+  \begin{itemize}
+  \item Little RTTs on the wireless link
+  \item Does not guarantee against long disconnecitons
+  \end{itemize}
+\end{itemize}
+
+\paragraph*{Pure end-to-end} In this protocol, the user is aware of the wireless
+link. There are endless number of implementations of end-to-end protocols:
+\begin{itemize}
+\item TCP Westwood/Westwood+
+\item TCP Cubic \todo{Check if it really is a pure end-to-end protocol!}
+\end{itemize}
+
+\subparagraph*{TCP Westwood} This TCP version involves changes only to the
+server side of the conneciton, and not to everyone. It's userful for satellite
+comunication.
+The SSThresh is calculed in this way with three dupacks:
+\begin{equation}
+SSThresh = BWE * RTTmin
+\end{equation}
+if the cwnd is greater than the SSThresh instead we have that $cwnd=SSThresh$
+Otherwise, if a timeout occurs we have $SSThresh = BWE * RTTmin$ but the cwnd
+becomes equals to 1.
