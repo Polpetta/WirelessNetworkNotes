@@ -62,6 +62,48 @@ The SSThresh is calculed in this way with three dupacks:
 \begin{equation}
 SSThresh = BWE * RTTmin
 \end{equation}
-if the cwnd is greater than the SSThresh instead we have that $cwnd=SSThresh$
+If the cwnd is greater than the SSThresh instead we have that $cwnd=SSThresh$
 Otherwise, if a timeout occurs we have $SSThresh = BWE * RTTmin$ but the cwnd
 becomes equals to 1.
+
+Flow control isw based on an estimation of the eligible bandwidth (BWE). TCP
+Westwood can perform an estimation determined from ACK internal-arrival times
+and info in ACKs regarding amounts of bytes delivered. The \textit{rate
+  estimation} is based on three formulas.
+\todo{Check all the formulas! I'm not sure about their correctness.}
+\begin{equation}
+  RE_k = a_k \cdot RE_{k-1} + (1 - a_k) \cdot (\frac{b_k + b_{k-1}}{2})
+\end{equation}
+
+This formula calculate the filter. In particular, this formula is quick to
+compute, and allows to set proportions like: 75\% $RE_{k-1}$ and 25\% of
+samples. Obviously, it takes some time to have a good estimation of the
+bandwidth.
+To calculate the samples, the formula is:
+\begin{equation}
+b_k = \frac{ \sum_{t_y > t_k-T} d_j }{T} = \frac{ACK\ seen}{Time\ Passed}
+\end{equation}
+
+At the end, the filter is calculated another time:
+\begin{equation}
+a_k = \frac{2t - At_k}{2t + At_k}
+\end{equation}
+This formula is difficult to compute, and it requires some time.
+\begin{itemize}
+\item Pro:
+  \begin{itemize}
+    \item bandwidth estimation done at the sender side
+    \item code modifications only at the sender side
+  \end{itemize}
+\item Cons:
+  \begin{itemize}
+  \item wrong bandwidth estimation over asymmetric links
+  \item no specific mechanism to handle disconnections
+  \item problems with fairness \& frindliness\footnote{\textbf{Fairness}:
+    it's when with one flow with the same protocol you'll have the same
+    bandwidth usage.
+    
+    \textbf{Friendliness}: it's when with one flow with different procols you'll
+    have the same bandwidth usage.}
+  \end{itemize}
+\end{itemize}
