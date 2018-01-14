@@ -4,14 +4,14 @@ Wireless is less reliable than cable, and losses are common. In TCP though,
 every loss is treated as a congestion. This causes:
 \begin{itemize}
 \item Multiple cwnd\footnote{Congestion window} reductions
-\item Disconnections due timeouts
-\item Bandwidth waster
+\item Disconnections due to timeouts
+\item Bandwidth waste
 \end{itemize}
 
-This has also and impact on multi-hops paths: it takes twice the time to
+This has also an impact on multi-hops paths: it takes twice the time to
 transmit data with two hops, because is not possible to forward the message at
 the same time, but you have to wait, otherwise you'll end up with a collision.
-Increasing number of hops beyond three allows simultaneouse transmission on more
+Increasing number of hops beyond three allows simultaneous transmission on more
 than one link, however, degradation continues due to contentions between TCP
 data and ACKs traveling in opposite directions.
 
@@ -19,10 +19,10 @@ With movement, throughtput degrades, because there is a possibility of link
 breakage and route failure.
 
 To solve these issues, we could adopt a different way of seeing the network:
-\textit{conneciton split} and \textit{pure end-to-end} connection.
+\textit{connection split} and \textit{pure end-to-end} connection.
 
-\paragraph*{Connection split} The network is split, having local retransmission
-and quick actions on the wireless link.
+\paragraph*{Connection split} The network is splitted, having local
+retransmission and quick actions on the wireless link.
 Examples:
 \begin{itemize}
 \item I-TCP
@@ -44,7 +44,7 @@ Considerations:
 \item Cons:
   \begin{itemize}
   \item Little RTTs on the wireless link
-  \item Does not guarantee against long disconnecitons
+  \item No guarantee against long disconnections
   \end{itemize}
 \end{itemize}
 
@@ -56,17 +56,17 @@ link. There are endless number of implementations of end-to-end protocols:
 \end{itemize}
 
 \subparagraph*{TCP Westwood} This TCP version involves changes only to the
-server side of the conneciton, and not to everyone. It's userful for satellite
+server side of the connection, and not to everyone. It's useful for satellite
 comunication.
 The SSThresh is calculed in this way with three dupacks:
 \begin{equation}
-SSThresh = BWE * RTTmin
+SSThresh = BWE * RTT_min
 \end{equation}
 If the cwnd is greater than the SSThresh instead we have that $cwnd=SSThresh$
 Otherwise, if a timeout occurs we have $SSThresh = BWE * RTTmin$ but the cwnd
 becomes equals to 1.
 
-Flow control isw based on an estimation of the eligible bandwidth (BWE). TCP
+Flow control is based on an estimation of the eligible bandwidth (BWE). TCP
 Westwood can perform an estimation determined from ACK internal-arrival times
 and info in ACKs regarding amounts of bytes delivered. The \textit{rate
   estimation} is based on three formulas.
@@ -100,10 +100,10 @@ This formula is difficult to compute, and it requires some time.
   \item wrong bandwidth estimation over asymmetric links
   \item no specific mechanism to handle disconnections
   \item problems with fairness \& frindliness\footnote{\textbf{Fairness}:
-    it's when with one flow with the same protocol you'll have the same
+    One flow with the \textbf{same} protocol $\rightarrow$ same
     bandwidth usage.
     
-    \textbf{Friendliness}: it's when with one flow with different procols you'll
-    have the same bandwidth usage.}
+    \textbf{Friendliness}: One flow with \textbf{different} procols
+    $\rightarrow$ same bandwidth usage.}
   \end{itemize}
 \end{itemize}
