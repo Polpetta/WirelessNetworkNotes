@@ -69,7 +69,8 @@ In today's communications there are two types of satellites used:
 One of the problems of satellite communications is the great RTT\footnote{RTT
   means \textit{Round Trip Time}}. On top of it, there is a non-negligible
 Packet Error Rate (influenced by the weather conditions and constellations
-positioning), that force the adoption of some CRC system.
+positioning), that force the adoption of some CRC\footnote{CRC: cyclic
+redundancy check} system.
 
 To solve these problems, a new protocol needs to be used, and it's TCP Hybla,
 covered in~\ref{prt:tcp:hybla}.
@@ -91,18 +92,20 @@ internet protocols aren't able to exploit high-speed networks.
 \subsection{TCP solutions}
 
 As we can understand, traditional TCP protocols don't work very well with these
-links. High-speed networks requires very high volumes of W:
-$B(t) = \frac{W(t)}{RTT}$, and too little retransmission timers lead to frequent
-retransmissions. Thus, new TCP protocols were made.
+links. High-speed networks requires very high volumes of W\footnote{congestion
+window}: $B(t) = \frac{W(t)}{RTT}$, and too little retransmission timers lead
+to frequent retransmissions.
+Thus, new TCP protocols were made.
 
 \subsubsection{TCP Hybla}
 \label{prt:tcp:hybla}
 
 This protocol equalize the transmission rate against the RTT, and it's good for
 satellite links.
-TCP Hybla has the following solution: it sets a new parameter, $\rho$, setting
-it to $\rho = \frac{RTT}{RTT_0}$, where $RTT_0$ is a reference RTT (usually
-equals to 25ms).
+
+TCP Hybla adopt the following solution: it sets a new parameter, $\rho$,
+setting it to $\rho = \frac{RTT}{RTT_0}$, where $RTT_0$ is a reference RTT
+(usually equals to 25ms).
 Differently to ``classic'' TCP formula for $W(t)$ that is:
 \begin{equation*}
   W(t) = \begin{cases}
@@ -110,7 +113,7 @@ Differently to ``classic'' TCP formula for $W(t)$ that is:
     \frac{t - t_y}{RTT} + y, & \mbox{with } t \ge t_y \mbox{ for collision avoidance phase (CA)}
   \end{cases}
 \end{equation*}
-the Hybla formulas for $W(t)$ is:
+the Hybla formula for $W(t)$ is:
 \begin{equation}
   W(t) = \begin{cases}
     \rho^{2^{\rho \frac{t}{RTT}}} & \mbox{with } 0 \le t < t_{y,0} \mbox{ for slow start phase (SS)} \\
@@ -128,13 +131,13 @@ this is to provide bigger buffers, that's bad for real time communications.
 
 \subsubsection{TCP Highspeed}
 The aim of this protocol is to improve the exploitation of high-speed network
-bandwidth (e.g. fiber links). Similar to Hybla, when the cwnd is high is more
-aggressive
+bandwidth (e.g. fiber links). Similar to Hybla, when the cwnd is high, it's
+more aggressive.
 
 \subsubsection{Disruption Tolerant Networks - DTN}
 DTN are designed to work whenever end-to-end connectivity may be not always
 available. DTN adds a new layer (bundle layer) under the application one, that
-sends the message to the network as soon as it's available, creating a TCP
+sends the messages to the network as soon as it's available, creating a TCP
 connection.
 \begin{itemize}
 \item Pro:
@@ -147,14 +150,14 @@ connection.
   \end{itemize}
 \end{itemize}
 
-\begin{figure}[t]
+\begin{figure}[H]
   \centering
   \includegraphics[scale=0.45]{DTNStack}
   \caption{DTN Stack}
 \end{figure}
 
 \subsubsection{Performance Enhancing Proxies}
-This proxy isolate the challenge link with the rest of the network, through an
+This proxy isolates the challenge link with the rest of the network, through an
 intermediate agent before it.
 \begin{itemize}
   \item Pro:
@@ -171,7 +174,7 @@ intermediate agent before it.
 
 \subsubsection{TCP adaptive - Selection}
 Proposed from the DTN group, the right TCP protocol is selected based on the
-connection. This selection is performed using the following characteristic:
+connection. This selection is performed using the following characteristics:
 \begin{itemize}
 \item from the agent that perform TCP selection
 \item exploiting cross-layer possibilities
