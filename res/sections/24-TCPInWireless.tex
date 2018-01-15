@@ -15,7 +15,7 @@ Increasing number of hops beyond three allows simultaneous transmission on more
 than one link, however, degradation continues due to contentions between TCP
 data and ACKs traveling in opposite directions.
 
-With movement, throughtput degrades, because there is a possibility of link
+With movement, throughput degrades, because there is a possibility of link
 breakage and route failure.
 
 To solve these issues, we could adopt a different way of seeing the network:
@@ -57,22 +57,22 @@ link. There are endless number of implementations of end-to-end protocols:
 
 \subparagraph*{TCP Westwood} This TCP version involves changes only to the
 server side of the connection, and not to everyone. It's useful for satellite
-comunication.
-The SSThresh is calculed in this way with three dupacks:
+communication.
+The SSThresh is calculated in this way with three dupAcks:
 \begin{equation}
-SSThresh = BWE * RTT_min
+SSThresh = BWE * RTT_{min}
 \end{equation}
 If the cwnd is greater than the SSThresh instead we have that $cwnd=SSThresh$
-Otherwise, if a timeout occurs we have $SSThresh = BWE * RTTmin$ but the cwnd
-becomes equals to 1.
+Otherwise, if a timeout occurs we have $SSThresh = BWE * RTT_{min}$ but the
+cwnd becomes equals to 1.
 
 Flow control is based on an estimation of the eligible bandwidth (BWE). TCP
 Westwood can perform an estimation determined from ACK internal-arrival times
 and info in ACKs regarding amounts of bytes delivered. The \textit{rate
   estimation} is based on three formulas.
-\todo{Check all the formulas! I'm not sure about their correctness.}
 \begin{equation}
-  RE_k = a_k \cdot RE_{k-1} + (1 - a_k) \cdot (\frac{b_k + b_{k-1}}{2})
+  RE_k = a_k \cdot RE_{k-1} + (1 - a_k) \cdot \left( \frac{b_k + b_{k-1}}{2}
+\right)
 \end{equation}
 
 This formula calculate the filter. In particular, this formula is quick to
@@ -81,12 +81,12 @@ samples. Obviously, it takes some time to have a good estimation of the
 bandwidth.
 To calculate the samples, the formula is:
 \begin{equation}
-b_k = \frac{ \sum_{t_y > t_k-T} d_j }{T} = \frac{ACK\ seen}{Time\ Passed}
+b_k = \frac{ \sum_{t_j > t_k-T} d_j }{T} = \frac{ACK\ seen}{Time\ Passed}
 \end{equation}
 
 At the end, the filter is calculated another time:
 \begin{equation}
-a_k = \frac{2t - At_k}{2t + At_k}
+a_k = \frac{2t - \Delta t_k}{2t + \Delta t_k}
 \end{equation}
 This formula is difficult to compute, and it requires some time.
 \begin{itemize}
@@ -99,11 +99,11 @@ This formula is difficult to compute, and it requires some time.
   \begin{itemize}
   \item wrong bandwidth estimation over asymmetric links
   \item no specific mechanism to handle disconnections
-  \item problems with fairness \& frindliness\footnote{\textbf{Fairness}:
+  \item problems with fairness \& friendliness\footnote{\textbf{Fairness}:
     One flow with the \textbf{same} protocol $\rightarrow$ same
     bandwidth usage.
     
-    \textbf{Friendliness}: One flow with \textbf{different} procols
+    \textbf{Friendliness}: One flow with \textbf{different} protocols
     $\rightarrow$ same bandwidth usage.}
   \end{itemize}
 \end{itemize}
