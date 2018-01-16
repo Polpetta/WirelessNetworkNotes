@@ -10,7 +10,7 @@ JOB_NAME=-jobname='$(OUTPUT_NAME)'
 CCFLAGS= -pdflatex='pdflatex -interaction=nonstopmode' -pdf
 SHELL := /bin/bash #Need bash not shell
 
-all: compile
+all: spellcheck compile
 
 compile:
 	if [[ -a "res/$(LIST_NAME)" ]]; then echo "Removing res/$(LIST_NAME)"; \
@@ -21,6 +21,9 @@ compile:
 	done; \
 	$(CC) -C $(JOB_NAME); \
 	$(CC) $(CCFLAGS) $(JOB_NAME); \
+
+spellcheck:
+	./tools/spellcheck.sh
 
 clean:
 	git clean -Xfd
