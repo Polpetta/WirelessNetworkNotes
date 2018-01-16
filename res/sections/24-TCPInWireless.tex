@@ -1,0 +1,109 @@
+\section{TCP and Wireless}
+
+Wireless is less reliable than cable, and losses are common. In TCP though,
+every loss is treated as a congestion. This causes:
+\begin{itemize}
+\item Multiple cwnd\footnote{Congestion window} reductions
+\item Disconnections due to timeouts
+\item Bandwidth waste
+\end{itemize}
+
+This has also an impact on multi-hops paths: it takes twice the time to
+transmit data with two hops, because is not possible to forward the message at
+the same time, but you have to wait, otherwise you'll end up with a collision.
+Increasing number of hops beyond three allows simultaneous transmission on more
+than one link, however, degradation continues due to contentions between TCP
+data and ACKs traveling in opposite directions.
+
+With movement, throughput degrades, because there is a possibility of link
+breakage and route failure.
+
+To solve these issues, we could adopt a different way of seeing the network:
+\textit{connection split} and \textit{pure end-to-end} connection.
+
+\paragraph*{Connection split} The network is splitted, having local
+retransmission and quick actions on the wireless link.
+Examples:
+\begin{itemize}
+\item I-TCP
+\item M-TCP
+\item Proxy
+\item Snoop Protocol
+\end{itemize}
+
+\subparagraph*{Snoop Protocol} In this protocol, there is a tower with a big
+buffer keeping a list of ACKs: it handles dupAcks/lost packages, without
+stopping the sender from sending new data to the tower.
+Considerations:
+\begin{itemize}
+\item Pro:
+  \begin{itemize}
+  \item Local (and timely) loss recovery
+  \item End-to-end semantics preservation (almost)
+  \end{itemize}
+\item Cons:
+  \begin{itemize}
+  \item Little RTTs on the wireless link
+  \item No guarantee against long disconnections
+  \end{itemize}
+\end{itemize}
+
+\paragraph*{Pure end-to-end} In this protocol, the user is aware of the wireless
+link. There are endless number of implementations of end-to-end protocols:
+\begin{itemize}
+\item TCP Westwood/Westwood+
+\item TCP Cubic \todo{Check if it really is a pure end-to-end protocol!}
+\end{itemize}
+
+\subparagraph*{TCP Westwood} This TCP version involves changes only to the
+server side of the connection, and not to everyone. It's useful for satellite
+communication.
+The SSThresh is calculated in this way with three dupAcks:
+\begin{equation}
+SSThresh = BWE * RTT_{min}
+\end{equation}
+If the cwnd is greater than the SSThresh instead we have that $cwnd=SSThresh$
+Otherwise, if a timeout occurs we have $SSThresh = BWE * RTT_{min}$ but the
+cwnd becomes equals to 1.
+
+Flow control is based on an estimation of the eligible bandwidth (BWE). TCP
+Westwood can perform an estimation determined from ACK internal-arrival times
+and info in ACKs regarding amounts of bytes delivered. The \textit{rate
+  estimation} is based on three formulas.
+\begin{equation}
+  RE_k = a_k \cdot RE_{k-1} + (1 - a_k) \cdot \left( \frac{b_k + b_{k-1}}{2}
+\right)
+\end{equation}
+
+This formula calculate the filter. In particular, this formula is quick to
+compute, and allows to set proportions like: 75\% $RE_{k-1}$ and 25\% of
+samples. Obviously, it takes some time to have a good estimation of the
+bandwidth.
+To calculate the samples, the formula is:
+\begin{equation}
+b_k = \frac{ \sum_{t_j > t_k-T} d_j }{T} = \frac{ACK\ seen}{Time\ Passed}
+\end{equation}
+
+At the end, the filter is calculated another time:
+\begin{equation}
+a_k = \frac{2t - \Delta t_k}{2t + \Delta t_k}
+\end{equation}
+This formula is difficult to compute, and it requires some time.
+\begin{itemize}
+\item Pro:
+  \begin{itemize}
+    \item bandwidth estimation done at the sender side
+    \item code modifications only at the sender side
+  \end{itemize}
+\item Cons:
+  \begin{itemize}
+  \item wrong bandwidth estimation over asymmetric links
+  \item no specific mechanism to handle disconnections
+  \item problems with fairness \& friendliness\footnote{\textbf{Fairness}:
+    One flow with the \textbf{same} protocol $\rightarrow$ same
+    bandwidth usage.
+    
+    \textbf{Friendliness}: One flow with \textbf{different} protocols
+    $\rightarrow$ same bandwidth usage.}
+  \end{itemize}
+\end{itemize}
