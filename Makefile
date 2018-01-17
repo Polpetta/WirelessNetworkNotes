@@ -25,6 +25,12 @@ compile:
 spellcheck:
 	./tools/spellcheck.sh
 
+watch:
+	while true; do \
+		make --silent; \
+		inotifywait -qre close_write res/sections; \
+	done
+
 clean:
 	git clean -Xfd
 	$(CC) -C $(JOB_NAME)
