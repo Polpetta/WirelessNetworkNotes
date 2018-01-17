@@ -16,6 +16,7 @@ addons:
     - pgf
     - lmodern
     - aspell
+    - aspell-en
 script:
 - make
 before_deploy:
