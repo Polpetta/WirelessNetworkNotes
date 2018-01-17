@@ -25,7 +25,14 @@ compile:
 spellcheck:
 	./tools/spellcheck.sh
 
+
 ci: spellcheck compile
+
+watch:
+	while true; do \
+		make --silent; \
+		inotifywait -qre close_write res/sections; \
+	done
 
 clean:
 	git clean -Xfd
