@@ -15,6 +15,7 @@ addons:
     - latex-xcolor
     - pgf
     - lmodern
+    - aspell
 script:
 - make
 before_deploy:
