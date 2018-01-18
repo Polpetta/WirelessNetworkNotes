@@ -87,4 +87,60 @@ type of messages between them.
 \end{itemize}
 
 \section{Protocols classification}
-% TODO later as is a long part
+
+Protocols can be proactive or reactive, and are classificated as:
+\begin{itemize}
+\item table-driven (proactive) $\to$ up-to-date routing information are
+  maintained
+\item source-initiated (on demand/demand driven) $\to$ only routes in use are
+  maintained
+\item hybrid protocols $\to$ combination of proactive and reactive protocols
+\end{itemize}
+
+\subsection{Proactive protocols}
+
+Proactive protocols are based on traditional distance-vector and link-state
+protocols, where each node maintains a route to the other edge of the network.
+This cause a high overhead in most scenarios, but since each node maintains and
+updates its routing table, there is a low packet forwarding latency.
+
+Due the proactive nature, changes to the network topology are immediately
+propagated to all the nodes.
+
+There are different typologies, that will be described below.
+
+\subsubsection{DSDV (Destination Sequenced Distance Vector)}
+
+Based on Bellum-Ford algorithm it has characteristics similar to Dijkstra's
+algorithm, but with slower performace and a better versatility (it supports
+negative weights). With DSDV, every route has a sequence number and packets are
+transmitted according to the routing table: each node has a routing table with
+all the nodes listed, and each node has its own sequence number.
+The routing table consistency is kept trasmitting periodically updates and when
+two routes to a destination is received from two different neightbors the one
+with the gratest destination dequence number is choosen, otherwise the smallest
+leap-count is kept % TODO check this part
+Continuously updating the routing table can generate a lot of overhead, and
+there are two ways to carry updates:
+\begin{itemize}
+\item performing a full dump
+\item having incremental updates
+\end{itemize}
+
+\subsubsection{OLSR (optimized link state routing)}
+
+This is based on the link state algorithm. It minimizes flooding of broadcasting
+packets by using only the selected \textit{Multipoint Hop (MH)} called
+\textit{Multipoint relays (MR)}. All links with neighboring MHs are declared and
+are flooded in the entire network. MR minimize the flooding by reducing
+duplicate retrasmission.
+
+In general, OLSR is good for large and dense networks.
+
+\subsubsection{CGSR}
+
+In this typology, nodes are organized into a hierarchy of clusters: every
+cluster has a \textit{cluster master (clusterhead)} that forward packets from
+the other sets node.
+
+\subsection{Reactive protocols}
