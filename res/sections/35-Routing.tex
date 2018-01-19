@@ -88,7 +88,15 @@ type of messages between them.
 
 \section{Protocols classification}
 
-Protocols can be proactive or reactive, and are classificated as:
+\begin{figure}[t]
+  \centering
+  \includegraphics[scale=0.3]{AdHocRoutingProtocols}
+  \caption{Tree listing all the ad-hoc routing protocols}
+  \label{fig:mac:adHocRoutingProtocols}
+\end{figure}
+
+As shown in Figure~\ref{fig:mac:adHocRoutingProtocols} protocols can be
+proactive or reactive, and are classificated as:
 \begin{itemize}
 \item table-driven (proactive) $\to$ up-to-date routing information are
   maintained
@@ -144,3 +152,131 @@ cluster has a \textit{cluster master (clusterhead)} that forward packets from
 the other sets node.
 
 \subsection{Reactive protocols}
+The source builds routing on demand with a ``flooding'' method, but maintains
+only active routes.
+Advantages:
+\begin{itemize}
+\item less overhead
+\item better scaling properties
+\item route acquisition latency
+\end{itemize}
+
+Source-initiated on-demand routing protocols have the following characteristics:
+\begin{itemize}
+\item route created only when needed
+\item flooding is used in order to find routes
+\item router maintenance procedure is used to repair broken routes
+\end{itemize}
+
+\subsubsection{AODV (Ad hoc On-Demand Distance Vector Routing)}
+
+This routing protocol, based on DSDV, exchange the routing table only along a
+given route. In order to discover routes, there is a specific package, RREQ
+(\textit{Route Request Packet}). The packet is sent from the sender to the
+receiver, and when it's received, it's pinged back to the source, creating a
+path.\todo{Is an RREP or an RREQ that is sent back? Need to be checked!}
+
+Routes are timed: after a while they expire: unicast and multicast routes are
+kept until a timeout happens.
+
+\paragraph*{Properties} AODV's properties:
+\begin{itemize}
+\item discovers routes as and where necessary
+\item routes are maintained just as long as necessary
+\item sequence number gets increased every time the node notices chenges in the neightborhood topology
+\end{itemize}
+
+\paragraph*{How a package is sent} AODV use the following procedure to send a
+packet:
+\begin{enumerate}
+\item routing table check to determine if the current route to destination is
+  present. If so, forward the packet to the next hop, otherwise, go to step 2
+\item begin discovery process with an RREQ\todo{Split the listing in
+  two columns} \footnote{
+  This packet is initially sent with a small time-to-live (TTL), to limit its
+  propagation and avoid an eccessive flooding.
+  The packet contains:
+  \begin{itemize}
+  \item source node's IP address
+  \item source node's current sequence number
+  \item destination IP address
+  \item destination sequence number
+  \end{itemize}
+}
+\item once an intermediate node receives a RREQ, the node sets up a reverse
+  route entry for the source node in its route table
+\item when RREQ reaches destination in order to responde to RREQ a node should
+  have it in its route table (the route has to be unexpired). If conditions are
+  true the node responds to RREQ by sending a RREP back using unicasting
+  and not flooding to the source (using reverse path), otherwise the hop count
+  is incremented and the packet broadcasted to its neighbors. Eventually, the
+  RREQ will be able to reach the destination. Intermediate nodes can send an
+  RREQ if they know a more recent path of the one previously known to senders.
+\end{enumerate}
+
+\paragraph*{Broadcast} The broadcast is performed by flooding the network, and
+a sequence number on the packets is used to stop loops from happening, meaning
+that a package could expire without have reached the destination. To solve this
+problem, the life of a packet can be aumented, changing its time-to-live (TTL).
+Using the flooding to broadcast packets has the following pros:
+\begin{itemize}
+\item simplicity
+\item efficent when overhead for route discovery is higher than the data
+  transfered
+  \item potential higher reliability of data delivery
+\end{itemize}
+...but it has some cons too:
+\begin{itemize}
+\item very high overhead potentially
+\item possibility of collision during packet propagation
+\end{itemize}
+
+\subsubsection{DSR (Dynamic Source Routing)}
+
+With this ad-hoc routing protocol nodes maintains route caches, and the full
+source-route is aggregated in RREQ and sent back in RREP. Each data packet has
+full source route, casuing a little overhead increment.
+Route discovery starts when the sender initiates requests and intermediate nodes
+add their address onto request so that when the packet reaches destination it
+contains all the full path.
+
+\paragraph*{Differences with AODV} Being similar to AODV, it has the following
+differences:
+\begin{itemize}
+\item DSR includes source routes, having large headers (and suffering degraded
+  performances)
+\item AODV keeps routing tables temporarily
+\item AODV keeps routes only between nodes which need to comunicate with
+\item DSR route cached entries don't expire
+\end{itemize}
+
+\section{Other routing \& metrics}
+
+\subsection{Routing protocols}
+
+\paragraph*{Signal stability routing} Here, the signal strengh is used as
+metric, in combination with a DSR-like routing. RREQ is forwarded only if the
+packet is received over a link with good signal strengh.
+
+\paragraph*{Geographic routing protocols} This protocols use location. In
+paricular, GPSR (greedy perimeter stateless routing) has the following
+properties:
+\begin{itemize}
+\item location of the destination node is assumed to be known
+\item each node knows location of its neightbors $\to$ packets are forwarded to
+  the closest one
+\item if there is a ``hole'' in the graph, use perimeter routing (right-hand rule) \todo{Maybe this role could be explained a little bit.}
+\end{itemize}
+
+\subsection{Metrics}
+
+\paragraph*{Associativity-based} \todo{This part is confused, check this out!}
+Defines metric with a ``dregree of association stability'' (with how many
+frequency do I move from my neightboor?). Nodes with less mobility or better
+links have higher stability volume.
+
+\paragraph*{Exprected Transmission Time (ETT)} This metric is easier to computer
+than the singnal strengh, and it can be more useful.
+
+\paragraph*{Weighted cumulative expected transmission time} This metric is
+better for multi-radio and asymmetric route links.
