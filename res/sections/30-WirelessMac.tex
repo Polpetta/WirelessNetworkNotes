@@ -1,0 +1,37 @@
+\chapter{Wireless MAC}
+
+
+Usually in a home there are a lot of wireless devices: there are different
+requirements, from low delay to high bandwith availability and high reliability.
+
+\textit{Home routers} can be a bottleneck\footnote{
+  Typically the bottlenecks are at the edges of the network:
+  \begin{itemize}
+  \item Server bandwith
+  \item Last mile to router
+  \item In gome routers (wireless bandwith)
+  \end{itemize}
+}
+of the network traffic, acting as a Gateway between in-home devices and the
+outside world.
+Most network protocols developed assuming mostly TCP-based traffic. This
+assumption needs a radical reconsideration when UDP-based services for
+entertainment come into picture (because it's extermely delay sensitive).
+
+\section{Issues}
+
+One of the issue of wireless MAC is the packet retransmission, that cause delays
+that can be extremely dangerous for UDP-based services. This delay is increased
+with long TCP flows (e.g. FTP).
+
+\subsection{Solutions}
+
+In order to solve this problem several solutions were implemented. The first
+solution is to set the MAC packet retransmission to 3. This will ensure the
+maximum throughput\footnote{
+  The throughput is the maximum rate of production or the maximum rate at which
+  something can be processed in networking: is the rate of successful message
+  delivery over a comunication channel.
+}
+possible.
+
