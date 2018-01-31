@@ -1,12 +1,12 @@
 \chapter{802.11 Wireless Standards}
 
-Currently there are a lot of 802.11 standards. The important ones are listed
+Currently there are a lot of 802.11 standards. The important ones are listed    
 in the table~\ref{tab:802.11ws:list}% TODO insert table ref
 
 \begin{table}[t]
 \centering
 \resizebox{\textwidth}{!}{%
-\begin{tabular}{|l|p{8cm}|}
+\begin{tabular}{|l|p{10cm}|}
 \hline
 \textbf{802.11 Typology} & \textbf{Description}                                                     \\ \hline
 802.11a                  & 54Mb/s, 5GHz. Launched in 2001, took more to develop than "b"            \\ \hline
@@ -21,3 +21,35 @@ in the table~\ref{tab:802.11ws:list}% TODO insert table ref
 \caption{List of most important 802.11 wireless standards}
 \label{tab:802.11ws:list}
 \end{table}
+
+\section{802.11e}
+
+802.11e as already said brings QoS (quality of service) extension. This doesn't
+mean you'll always have a good quality of service.
+802.11 used initially two type of ways to challenge data: \textbf{DCF}
+(distributed coordination function) and \textbf{PCF} (point coordination
+funciton). From these two methods, \textbf{HCCA} was created.
+
+\paragraph*{DCF} This is the basic access method for 802.11, and offers CSMA/CA for trasmitting in the channel.
+
+\paragraph*{PCF}\todo{This paragraph is very confused, please check it out carefully!} It's a priority that is centrally controlled,\todo{I've copied what's been written in the slides, but I dunno what it means!} the PC (point coordinator) is usually also the AP (access point).
+After each beacon there is a CP (content period) and a CFP (contention free period). PCF has several problems that lead this channel access method to not being used in practice, also because there is no mechanism to preserve bandwidth or characterize traffic in any way.
+
+\paragraph*{HCCA} It's a DCF inspired system, created as an extension of PCF, and it uses contention free periods. In contrast to PCF, in which the interval between two beacon frames is divided into ten periods of CFP and CP, the HCCA allows for CFPs being initiated at almost anytime during a CP. In this case, CFP is called CAP. During the CP, all stations function in EDCA mode, instead during CAP, the hybrid coordinator (the AP) controls the access to the medium.
+HCCA has the following characteristics:
+\begin{itemize}
+\item Efficent use of bandwidth
+\item Guarantees latency and bandwidth
+\item Has a complex scheduler and added complexity
+\end{itemize}
+
+This way to challenge data is optional, and it's not implemented to any significant level.\\[5pt]
+
+
+Additionally, 802.11 provides two types of contention window: \textbf{normal} and
+\textbf{adaptive}.
+
+\paragraph*{Normal contention window} This type of contention window select a random number from a range that goes from 0 to $cw$\todo{I don't understand from where this $cw$ came out :/}. The size of $cw$ is small, ensuring less wastage of idle slots time but causing a large number of collisions with multiple senders (two or more station can reach zero at once).
+
+\paragraph*{Adaptive contention window} The adaptive contention window starts with $cw = 31$ and when no CTS or ACK are received from a communication it then sets the cw to $2 \cdot cw + 1$\footnote{So it'll become $63, 127, 255$.}. Finally, when the transmission succeed, the $cw$ will be reset to $31$.
+The adaptive scheme is unfair, and under contention, unlucky nodes will use larger $cw$ than luckier one (due straight reset after a success). Having larger $cw$ means that while unlucky nodes are counting down for access to the channel lucky nodes may be able to transmit several packets. 802.11 adaptive contention window doesn't provide QoS.
