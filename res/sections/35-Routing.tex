@@ -63,7 +63,7 @@ There is just a single hop from the access point (AP) to the wireless node.
 \end{itemize}
 Additionally, there are other difficulties, such as energy consumption and
 limited bandwidth (due exchange of routing information) on mobile systems. In
-wireline networks we have symmetric links, limited redundancy and fixed
+wire line networks we have symmetric links, limited redundancy and fixed
 typology, instead in wireless has asymmetric links, random redundancy with
 unplanned, dynamic links. With all this peculiarities, traditional routing
 algorithms for MANETS\footnote{MANET stands for \textit{Metropolitan Area
@@ -125,7 +125,7 @@ negative weights). With DSDV, every route has a sequence number and packets are
 transmitted according to the routing table: each node has a routing table with
 all the nodes listed, and each node has its own sequence number.
 The routing table consistency is kept transmitting periodically updates and when
-two routes to a destination is received from two different neighbours the one
+two routes to a destination is received from two different neighbors the one
 with the greatest destination sequence number is chosen, otherwise the smallest
 leap-count is kept % TODO check this part
 Continuously updating the routing table can generate a lot of overhead, and
@@ -148,7 +148,7 @@ In general, OLSR is good for large and dense networks.
 \subsubsection{CGSR}
 
 In this typology, nodes are organized into a hierarchy of clusters: every
-cluster has a \textit{cluster master (clusterhead)} that forward packets from
+cluster has a \textit{cluster master (cluster head)} that forward packets from
 the other sets node.
 
 \subsection{Reactive protocols}
@@ -184,7 +184,7 @@ kept until a timeout happens.
 \item discovers routes as and where necessary
 \item routes are maintained just as long as necessary
 \item sequence number gets increased every time the node notices changes in the
-neighbourhood topology
+neighborhood topology
 \end{itemize}
 
 \paragraph*{How a package is sent} AODV use the following procedure to send a
@@ -264,7 +264,7 @@ particular, GPSR (greedy perimeter stateless routing) has the following
 properties:
 \begin{itemize}
 \item location of the destination node is assumed to be known
-\item each node knows location of its neighbours $\to$ packets are forwarded to
+\item each node knows location of its neighbors $\to$ packets are forwarded to
   the closest one
 \item if there is a ``hole'' in the graph, use perimeter routing (right-hand
 rule) \todo{Maybe this role could be explained a little bit.}
@@ -274,7 +274,7 @@ rule) \todo{Maybe this role could be explained a little bit.}
 
 \paragraph*{Associativity-based} \todo{This part is confused, check this out!}
 Defines metric with a ``degree of association stability'' (with how many
-frequency do I move from my neighbours?). Nodes with less mobility or better
+frequency do I move from my neighbors?). Nodes with less mobility or better
 links have higher stability volume.
 
 \paragraph*{Expected Transmission Time (ETT)} This metric is easier to computer
