@@ -1,7 +1,7 @@
 \chapter{Routing}
 
 Routing determine the ``good''\footnote{The minimum path typically} path (
-sequence of routers) thru network from source to destination.
+sequence of routers) through network from source to destination.
 Routing protocols use graphs as a mathematical abstraction.
 
 \section{Typologies of routing}
@@ -24,20 +24,21 @@ An example of a global routing algorithm is the one made by Dijkstra.
 
 \subsubsection{Dijkstra's algorithm}
 
-In this algorithm, that's iterative, all the nodes know link cost between each
-other. Basically, it computes least cost path from one note to all the others.
+In this iterative algorithm all the nodes know link cost between each
+other. Basically, it computes the path with the lowest cost from one node to
+all the others.
 
-\begin{figure}[t]
+\begin{figure}[H]
   \captionsetup{singlelinecheck=off}
   \centering
   \includegraphics[scale=0.45]{DijkstraAlgo}
   \caption[Dijkstra's algorithm]{Dijkstra's algorithm. Notation:
     \begin{itemize}
-    \item $c(x, y)$: link cost from node $x$ to $y$. It's $\infty$ if not direct
-      neighbors
-    \item $D(v)$: current value of cost of path from source to destination $v$
-    \item $p(v)$: predecessor node along path from source to $v$
-    \item $N'$: set of nodes whose least cost path definitively known
+    \item $c(x, y)$: link cost from node $x$ to $y$. It's $\infty$ if x has not
+        direct neighbors;
+    \item $D(v)$: current value of cost of path from source to destination $v$;
+    \item $p(v)$: predecessor node along path from source to $v$;
+    \item $N'$: set of nodes whose least cost path is definitively known.
     \end{itemize}
   }
 \end{figure}
@@ -63,7 +64,7 @@ There is just a single hop from the access point (AP) to the wireless node.
 \end{itemize}
 Additionally, there are other difficulties, such as energy consumption and
 limited bandwidth (due exchange of routing information) on mobile systems. In
-wire line networks we have symmetric links, limited redundancy and fixed
+wireline networks we have symmetric links, limited redundancy and fixed
 typology, instead in wireless has asymmetric links, random redundancy with
 unplanned, dynamic links. With all this peculiarities, traditional routing
 algorithms for MANETS\footnote{MANET stands for \textit{Metropolitan Area
@@ -78,7 +79,7 @@ type of messages between them.
   protocol there are some goals:
   \begin{itemize}
   \item minimal control overhead
-%   \item multi-hop path routing capability
+  \item multi-hop path routing capability
   \item no loops
   \end{itemize}
 \item Multicast: transmission 1 to N: different receivers of the same message,
@@ -125,7 +126,7 @@ negative weights). With DSDV, every route has a sequence number and packets are
 transmitted according to the routing table: each node has a routing table with
 all the nodes listed, and each node has its own sequence number.
 The routing table consistency is kept transmitting periodically updates and when
-two routes to a destination is received from two different neighbors the one
+two routes to a destination is received from two different neighbours the one
 with the greatest destination sequence number is chosen, otherwise the smallest
 leap-count is kept % TODO check this part
 Continuously updating the routing table can generate a lot of overhead, and
@@ -148,7 +149,7 @@ In general, OLSR is good for large and dense networks.
 \subsubsection{CGSR}
 
 In this typology, nodes are organized into a hierarchy of clusters: every
-cluster has a \textit{cluster master (cluster head)} that forward packets from
+cluster has a \textit{cluster master (clusterhead)} that forward packets from
 the other sets node.
 
 \subsection{Reactive protocols}
@@ -183,8 +184,7 @@ kept until a timeout happens.
 \begin{itemize}
 \item discovers routes as and where necessary
 \item routes are maintained just as long as necessary
-\item sequence number gets increased every time the node notices changes in the
-neighborhood topology
+\item sequence number gets increased every time the node notices changes in the neighbourhood topology
 \end{itemize}
 
 \paragraph*{How a package is sent} AODV use the following procedure to send a
@@ -264,17 +264,16 @@ particular, GPSR (greedy perimeter stateless routing) has the following
 properties:
 \begin{itemize}
 \item location of the destination node is assumed to be known
-\item each node knows location of its neighbors $\to$ packets are forwarded to
+\item each node knows location of its neighbours $\to$ packets are forwarded to
   the closest one
-\item if there is a ``hole'' in the graph, use perimeter routing (right-hand
-rule) \todo{Maybe this role could be explained a little bit.}
+\item if there is a ``hole'' in the graph, use perimeter routing (right-hand rule) \todo{Maybe this role could be explained a little bit.}
 \end{itemize}
 
 \subsection{Metrics}
 
 \paragraph*{Associativity-based} \todo{This part is confused, check this out!}
 Defines metric with a ``degree of association stability'' (with how many
-frequency do I move from my neighbors?). Nodes with less mobility or better
+frequency do I move from my neighbours?). Nodes with less mobility or better
 links have higher stability volume.
 
 \paragraph*{Expected Transmission Time (ETT)} This metric is easier to computer
