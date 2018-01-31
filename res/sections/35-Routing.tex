@@ -44,10 +44,11 @@ all the others.
 \end{figure}
 
 \subsection{Decentralized routing}
-In this type of routing routers know physically-connected neighbors, and link
-cost to them. There is a iterative process of computation and exchange of
-information with neighbors.
-This algorithms are defined as ``distance vector'' algorithms.
+In this type of routing routers know \textbf{physically-connected} neighbors,
+and link cost to them.
+There is an iterative process of computation and exchange of information with
+neighbors.
+These algorithms are defined as \textbf{``distance vector''} algorithms.
 
 \subsection{Routing based on network typology}
 
@@ -56,17 +57,20 @@ There are different types of routing based on different types of networks.
 \paragraph*{Infrastructure based} In this case routing is relatively simple.
 There is just a single hop from the access point (AP) to the wireless node.
 
-\paragraph*{MANET} Also know as ad-hoc, it has the following characteristics:
+\paragraph*{MANET} It's also know as ad-hoc, and has the following
+characteristics:
 \begin{itemize}
-\item the network constantly changes
-\item wireless nodes are not necessarily all adjacent, so data forwarding
-  could be necessary
+\item the \textbf{network constantly changes},
+\item wireless nodes are \textbf{not} necessarily all adjacent, so data forwarding
+  could be necessary.
 \end{itemize}
-Additionally, there are other difficulties, such as energy consumption and
-limited bandwidth (due exchange of routing information) on mobile systems. In
-wireline networks we have symmetric links, limited redundancy and fixed
-typology, instead in wireless has asymmetric links, random redundancy with
-unplanned, dynamic links. With all this peculiarities, traditional routing
+Additionally, there are other difficulties, such as \textbf{energy consumption}
+and \textbf{limited bandwidth} (due to exchange of routing information)
+on mobile systems.
+
+In wireline networks we have symmetric links, limited redundancy and fixed
+topology, instead in wireless has asymmetric links, random redundancy with
+unplanned, dynamic links. With all thess peculiarities, traditional routing
 algorithms for MANETS\footnote{MANET stands for \textit{Metropolitan Area
     Network}} are inefficient, and the new one must rely on data link
 information, not just network layer updates\footnote{Layer updates only
@@ -82,14 +86,14 @@ type of messages between them.
   \item multi-hop path routing capability
   \item no loops
   \end{itemize}
-\item Multicast: transmission 1 to N: different receivers of the same message,
-  that it can follow different paths
+\item Multicast: transmission 1 to N: more than one receiver of the same
+message, that it can follow different paths.
 \item Broadcast: transmission 1 to N: everyone receives the message
 \end{itemize}
 
 \section{Protocols classification}
 
-\begin{figure}[t]
+\begin{figure}[H]
   \centering
   \includegraphics[scale=0.3]{AdHocRoutingProtocols}
   \caption{Tree listing all the ad-hoc routing protocols}
@@ -101,8 +105,8 @@ proactive or reactive, and are classified as:
 \begin{itemize}
 \item table-driven (proactive) $\to$ up-to-date routing information are
   maintained
-\item source-initiated (on demand/demand driven) $\to$ only routes in use are
-  maintained
+\item source-initiated (on demand/demand driven) $\to$ create routes only when
+needed and mantain them until they are no more useful to the source.
 \item hybrid protocols $\to$ combination of proactive and reactive protocols
 \end{itemize}
 
