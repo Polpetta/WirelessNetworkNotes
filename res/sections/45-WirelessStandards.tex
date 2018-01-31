@@ -11,11 +11,11 @@ in the table~\ref{tab:802.11ws:list}% TODO insert table ref
 \textbf{802.11 Typology} & \textbf{Description}                                                     \\ \hline
 802.11a                  & 54Mb/s, 5GHz. Launched in 2001, took more to develop than "b"            \\ \hline
 802.11b                  & 5.5/11Mb/s. Launched in 1999, it was the first 802.11 protocol ever made \\ \hline
-802.11e                  & Brings QoS (Quality of Service) extension                                \\ \hline
+802.11e                  & It brings QoS (Quality of Service) extension                             \\ \hline
 802.11g                  & 54Mb/s, 2.4GHz, compatible with "b"                                      \\ \hline
 802.11n                  & High throughput technology - introduces MIMO                             \\ \hline
-802.11p                  & Brings communication between vehicles but also for payments              \\ \hline
-802.11s                  & Brings extension for mesh networks                                       \\ \hline
+802.11p                  & It brings communication between vehicles but also for payments           \\ \hline
+802.11s                  & It brings extension for mesh networks                                    \\ \hline
 \end{tabular}%
 }
 \caption{List of most important 802.11 wireless standards}
@@ -30,12 +30,24 @@ mean you'll always have a good quality of service.
 (distributed coordination function) and \textbf{PCF} (point coordination
 funciton). From these two methods, \textbf{HCCA} was created.
 
-\paragraph*{DCF} This is the basic access method for 802.11, and offers CSMA/CA for trasmitting in the channel.
+\paragraph*{DCF} This is the basic access method for 802.11, and offers CSMA/CA
+for trasmitting in the channel.
 
-\paragraph*{PCF}\todo{This paragraph is very confused, please check it out carefully!} It's a priority that is centrally controlled,\todo{I've copied what's been written in the slides, but I dunno what it means!} the PC (point coordinator) is usually also the AP (access point).
-After each beacon there is a CP (content period) and a CFP (contention free period). PCF has several problems that lead this channel access method to not being used in practice, also because there is no mechanism to preserve bandwidth or characterize traffic in any way.
+\paragraph*{PCF}\todo{This paragraph is very confused, please check it out
+  carefully!} It's a priority that is centrally controlled,\todo{I've copied
+  what's been written in the slides, but I dunno what it means!} the PC (point
+coordinator) is usually also the AP (access point).
+After each beacon there is a CP (content period) and a CFP (contention free
+period). PCF has several problems that lead this channel access method to not
+being used in practice, also because there is no mechanism to preserve bandwidth
+or characterize traffic in any way.
 
-\paragraph*{HCCA} It's a DCF inspired system, created as an extension of PCF, and it uses contention free periods. In contrast to PCF, in which the interval between two beacon frames is divided into ten periods of CFP and CP, the HCCA allows for CFPs being initiated at almost anytime during a CP. In this case, CFP is called CAP. During the CP, all stations function in EDCA mode, instead during CAP, the hybrid coordinator (the AP) controls the access to the medium.
+\paragraph*{HCCA} It's a DCF inspired system, created as an extension of PCF,
+and it uses contention free periods. In contrast to PCF, in which the interval
+between two beacon frames is divided into ten periods of CFP and CP, the HCCA
+allows for CFPs being initiated at almost anytime during a CP. In this case,
+CFP is called CAP. During the CP, all stations function in EDCA mode, instead
+during CAP, the hybrid coordinator (the AP) controls the access to the medium.
 HCCA has the following characteristics:
 \begin{itemize}
 \item Efficent use of bandwidth
@@ -43,13 +55,105 @@ HCCA has the following characteristics:
 \item Has a complex scheduler and added complexity
 \end{itemize}
 
-This way to challenge data is optional, and it's not implemented to any significant level.\\[5pt]
+This way to challenge data is optional, and it's not implemented to any
+significant level.\\[5pt]
 
 
-Additionally, 802.11 provides two types of contention window: \textbf{normal} and
+\noindent Additionally, 802.11 provides two types of contention window:
+\textbf{normal} and
 \textbf{adaptive}.
 
-\paragraph*{Normal contention window} This type of contention window select a random number from a range that goes from 0 to $cw$\todo{I don't understand from where this $cw$ came out :/}. The size of $cw$ is small, ensuring less wastage of idle slots time but causing a large number of collisions with multiple senders (two or more station can reach zero at once).
+\paragraph*{Normal contention window} This type of contention window select a
+random number from a range that goes from 0 to $cw$\todo{I don't understand
+  from where this $cw$ came out :/}. The size of $cw$ is small, ensuring less
+wastage of idle slots time but causing a large number of collisions with
+multiple senders (two or more station can reach zero at once).
 
-\paragraph*{Adaptive contention window} The adaptive contention window starts with $cw = 31$ and when no CTS or ACK are received from a communication it then sets the cw to $2 \cdot cw + 1$\footnote{So it'll become $63, 127, 255$.}. Finally, when the transmission succeed, the $cw$ will be reset to $31$.
-The adaptive scheme is unfair, and under contention, unlucky nodes will use larger $cw$ than luckier one (due straight reset after a success). Having larger $cw$ means that while unlucky nodes are counting down for access to the channel lucky nodes may be able to transmit several packets. 802.11 adaptive contention window doesn't provide QoS.
+\paragraph*{Adaptive contention window} The adaptive contention window starts
+with $cw = 31$ and when no CTS or ACK are received from a communication it then
+sets the cw to $2 \cdot cw + 1$\footnote{So it'll become $63, 127, 255$.}.
+Finally, when the transmission succeed, the $cw$ will be reset to $31$.
+The adaptive scheme is unfair, and under contention, unlucky nodes will use
+larger $cw$ than luckier one (due straight reset after a success). Having larger
+$cw$ means that while unlucky nodes are counting down for access to the channel
+lucky nodes may be able to transmit several packets. 802.11 adaptive contention
+window doesn't provide QoS.
+
+\subsection{EDCA}
+
+EDCA is a supported QoS mechanism in 802.11e. It has four access categories:
+\begin{enumerate}
+\item AC\_V0 (for voice) $\to$ when you want to be fast but you leave the
+  channel soon. it's priviledged to the others, especially during congestions.
+  It has a small $cw_{max}$ (7) because otherwise you'll end up with collisions.
+\item AC\_V1 (for video)
+\item AC\_BE (best effort) $\to$ the difference is present only on the
+  initiation phase
+\item AC\_BK (background) $\to$ with this access category, you don't care to be
+  fast
+\end{enumerate}
+
+EDCA has 8 traffic classes (TC) too.
+Each AC starts a back off after detecting the channel being idle for AIFS, and
+after waiting for it, each back off sets counters choosing between $1$ and
+$cw + 1$. The back off formula is:
+\begin{equation}
+newCW[AC] \ge ((oldCW[TC] + 1) \cdot PF) - 1
+\end{equation}
+
+The MSDU (Max Service Data Unit) are delivered through multiple back offs
+within one station using AC specific parameters.
+
+Whith EDCA video streams capacity drops. With more collisions I have larger
+contention windows, and with multiple streams I lose some overall bandwidth.
+
+\paragraph*{Prioritized channels} Similar to DCF, but with four priorities, EDCA offers prioritized channel, based on the QoS paraeters per traffic classes, which includes:
+\begin{itemize}
+\item AIFS[AC]\footnote{AIFS means \textit{Arbitration Inter-frame space}}
+\item CWmin[AC]
+\item PF[AC]\footnote{PF means \textit{Persistance Factor}}
+\end{itemize}
+
+\subsubsection{Pro and Cons}
+
+Using EDCA has the following advantages:
+\begin{itemize}
+\item Voice and video have priority over data
+\item It works well with a slightly loaded network
+\end{itemize}
+but has the following disadvantages:
+\begin{itemize}
+\item Streams of the same priority compete: making difficult for ECDA to be able
+  to guarantee a good access, latency, bandwidth or jitter to every connection. A solution to this problem is using \textbf{admission control}.
+\end{itemize}
+
+\paragraph*{Admission Control} This solution allows only a limited number of peers to access the network, limiting (but not eliminating) the stream contention and reducing the latency of QoS streams.
+In this way the best-effort approach is no more necessary.
+\subparagraph*{How Admission Control works} The AP advertises ACM\footnote{This is a bit that says if the AP supports Admission Control.} in beacon to indicate if admission control is mandatory for any Access Category. In this way, to use and AC that  sends AddTS (\textit{Add Traffic Specification}) Request Action Frame to AP that includes a TSPEC.
+When a new node wants to connect with the AP, the AP runs the admission control algorithm and replies with an AddTS Response Action Frame.
+
+\section{802.11n}
+
+This version supports legacy mode (a/b/g), and offers more bandwidth for QoS
+applications, a greater wireless range and throughput.
+The high data rates sometimes can cause interference with radar signals,
+typically with 2 transmitters MIMO the data rate can go up 300Mbps (on a 40MHz
+channel).
+
+\subsection{802.11n enhancements}
+
+This 802.11 version brings different enhancements.
+
+\paragraph*{MAC layer} at the MAC layer there are the following benefits:
+\begin{itemize}
+\item Smaller packets
+\item Combine ACK for more packets
+\item Packets aggregation
+\end{itemize}
+
+\paragraph*{Physical layer} At the physical layer, both for 2.4GHz and 5Ghz we have:
+\begin{itemize}
+\item Smaller slots
+\end{itemize}
+
+\section{802.11p}
