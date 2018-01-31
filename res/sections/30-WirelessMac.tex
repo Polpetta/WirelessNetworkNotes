@@ -2,21 +2,21 @@
 
 
 Usually in a home there are a lot of wireless devices: there are different
-requirements, from low delay to high bandwith availability and high reliability.
+requirements, from low delay to high bandwidth availability and high reliability.
 
 \textit{Home routers} can be a bottleneck\footnote{
   Typically the bottlenecks are at the edges of the network:
   \begin{itemize}
-  \item Server bandwith
+  \item Server bandwidth
   \item Last mile to router
-  \item In gome routers (wireless bandwith)
+  \item In home routers (wireless bandwidth)
   \end{itemize}
 }
 of the network traffic, acting as a Gateway between in-home devices and the
 outside world.
 Most network protocols developed assuming mostly TCP-based traffic. This
 assumption needs a radical reconsideration when UDP-based services for
-entertainment come into picture (because it's extermely delay sensitive).
+entertainment come into picture (because it's extremely delay sensitive).
 
 \section{Issues}
 
@@ -31,27 +31,28 @@ solution is to set the MAC packet retransmission to 3. This will ensure the
 maximum throughput\footnote{
   The throughput is the maximum rate of production or the maximum rate at which
   something can be processed in networking: is the rate of successful message
-  delivery over a comunication channel.
+  delivery over a communication channel.
 }
 possible. This number of retransmisssion will ensure less jitter, so like 1-2
 packets lost every 900 (that's 0.2\%).
 
-\textbf{Jitter} is the deviantion from true periodicity of a presumably periodic
-signal, often in relation to reference cloack signal. Jitter is a significant,
-and usually undesired, factor in the design of almost all communications links.
+\textbf{Jitter} is the deviation from true periodicity of a presumably
+periodic signal, often in relation to reference clock signal. Jitter is a
+significant, and usually undesired, factor in the design of almost all
+communications links.
 
 \subsubsection{SAP-LAW}
 
 SAP-LAW means Smart Access Point with Limited Advertisement Window.
 
-Usually, TCP behaviour is too agressive, because it continuously probes the link
+Usually, TCP behavior is too aggressive, because it continuously probes the link
 for more bandwidth, and call fill up the AP (Access Point) buffer with its
 packets. A solution can be change TCP behaviour to allow UDP based applications
 to be not jeopardized, granting high goodputs for downloading applications and
 avoiding queues, that are bad for real-time applications.
 
 \paragraph*{Smart Access Point} This technique exploit the advertised window to
-limit the bandwith utilized by TCP flows, limiting the speed of the sender. The AP can even avoid using buffer, having all the information about UDP bandwidth usage and can change the advertise window of TCP flows. The \textit{maxTCPRate} is calculated with this formula:
+limit the bandwidth utilized by TCP flows, limiting the speed of the sender. The AP can even avoid using buffer, having all the information about UDP bandwidth usage and can change the advertise window of TCP flows. The \textit{maxTCPRate} is calculated with this formula:
 \begin{equation}
   maxTCPRate(t) = \frac{(C - UDPTraffic(t))}{\sharp TCPFlows(t)}
 \end{equation}

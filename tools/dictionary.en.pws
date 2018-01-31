@@ -4,3 +4,7 @@ WiFi
 WiMax
 dupAcks
 TCP
+retransmission
+Jitter
+jitter
+goodputs
