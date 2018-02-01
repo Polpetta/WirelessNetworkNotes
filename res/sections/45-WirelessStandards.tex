@@ -28,10 +28,10 @@ in the table~\ref{tab:802.11ws:list}
 mean you'll always have a good quality of service.
 802.11 used initially two type of ways to challenge data: \textbf{DCF}
 (distributed coordination function) and \textbf{PCF} (point coordination
-funciton). From these two methods, \textbf{HCCA} was created.
+function). From these two methods, \textbf{HCCA} was created.
 
 \paragraph*{DCF} This is the basic access method for 802.11, and offers CSMA/CA
-for trasmitting in the channel.
+for transmitting in the channel.
 
 \paragraph*{PCF}\todo{This paragraph is very confused, please check it out
   carefully!} It's a priority that is centrally controlled,\todo{I've copied
@@ -50,7 +50,7 @@ CFP is called CAP. During the CP, all stations function in EDCA mode, instead
 during CAP, the hybrid coordinator (the AP) controls the access to the medium.
 HCCA has the following characteristics:
 \begin{itemize}
-\item Efficent use of bandwidth
+\item Efficient use of bandwidth
 \item Guarantees latency and bandwidth
 \item Has a complex scheduler and added complexity
 \end{itemize}
@@ -84,7 +84,7 @@ window doesn't provide QoS.
 EDCA is a supported QoS mechanism in 802.11e. It has four access categories:
 \begin{enumerate}
 \item AC\_V0 (for voice) $\to$ when you want to be fast but you leave the
-  channel soon. it's priviledged to the others, especially during congestions.
+  channel soon. it's privileged to the others, especially during congestion.
   It has a small $cw_{max}$ (7) because otherwise you'll end up with collisions.
 \item AC\_V1 (for video)
 \item AC\_BE (best effort) $\to$ the difference is present only on the
@@ -104,16 +104,16 @@ newCW[AC] \ge ((oldCW[TC] + 1) \cdot PF) - 1
 The MSDU (Max Service Data Unit) are delivered through multiple back offs
 within one station using AC specific parameters.
 
-Whith EDCA video streams capacity drops. With more collisions I have larger
+With EDCA video streams capacity drops. With more collisions I have larger
 contention windows, and with multiple streams I lose some overall bandwidth.
 
 \paragraph*{Prioritized channels} Similar to DCF, but with four priorities, EDCA
-offers prioritized channel, based on the QoS paraeters per traffic classes,
+offers prioritized channel, based on the QoS parameters per traffic classes,
 which includes:
 \begin{itemize}
 \item AIFS[AC]\footnote{AIFS means \textit{Arbitration Inter-frame space}}
 \item CWmin[AC]
-\item PF[AC]\footnote{PF means \textit{Persistance Factor}}
+\item PF[AC]\footnote{PF means \textit{Persistence Factor}}
 \end{itemize}
 
 \subsubsection{Pro and Cons}
@@ -161,7 +161,7 @@ This 802.11 version brings different enhancements.
 \item Packets aggregation
 \end{itemize}
 
-\paragraph*{Physical layer} At the physical layer, both for 2.4GHz and 5Ghz we
+\paragraph*{Physical layer} At the physical layer, both for 2.4GHz and 5GHz we
 have:
 \begin{itemize}
 \item Smaller slots
