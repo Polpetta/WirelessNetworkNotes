@@ -200,7 +200,67 @@ research is going on in particular about routing schemes and MAC layers.
 The mayor application for this wireless standard is \textbf{safe driving}.
 When an incident is detected, alert messages are sent from the Abnormal
 Vehicle\footnote{AV is a vehicle that its behavior is not conform to some
-threshold}\todo{The footnote needs a rewrite} to the following vehicles, via
+threshold}\todo{This footnote needs a rewrite} to the following vehicles, via
 broadcast. This messages are faster than the normal human reaction, and can
 prevent chained car accidents. How much time does it take to the following
 vehicles to receive the message to break? The latency it's an important aspect.
+Broadcasting messages could lead to an explosion when we have multi-hop path.
+To solve this, different solutions have been proposed.
+First of all, all the cars needs to have locations, so they can include details
+when they send the ``emergency message'', such as:
+\begin{AutoMultiColItemize}
+\item geographical location
+\item speed
+\item acceleration
+\item moving direction
+\end{AutoMultiColItemize}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[scale=0.4]{broadcast}
+  \caption[Optimal broadcast example]{
+    An example of an optimal broadcast: A, C, F, G and F broadcast the alert
+    message, meanwhile the other cars receive the message but don't send it
+    again, thus reducing the overall interference.
+  }
+  \label{fig:802.11ws:broadcast}
+\end{figure}
+
+The car movement needs to be kept in consideration: cars can move very fast,
+causing variable transmission range. On top of that, a car cannot be sure to
+be the farthest car receiving that broadcast message, as explained in
+Figure~\ref{fig:802.11ws:broadcast}. So who has to forward the alert message?
+It's important to pick up the right vehicle that has to propagate the message.
+If the message has already been rebroadcast by a following vehicle do not
+forward it, because it could be redundant. A way to reduce the message
+retransmission is to use a sort of back-off mechanism, or otherwise set vehicles
+contention window with an inverse proportion of the distance from the sender,
+but it has the unrealistic assumption that there is an unique, constant, and
+known-a-priori transmission range.
+
+\paragraph*{Using minimum connect dominating set} The MCDS identify the minimum
+number of sets that allows you to cover the whole set\footnote{A minimum
+  connected dominating set of a graph G is a connected dominating set with the
+  smallest possible cardinality among all connected dominating sets of G. The
+  connected domination number of G is the number of vertices in the minimum
+  connected dominating set. See more at
+  \url{https://en.wikipedia.org/wiki/Connected_dominating_set}
+}.
+Although it seems a good solution for this problem, it has the following
+issues:
+\begin{itemize}
+\item only the one in the MCDS can propagate the message, making the solution
+  optimal, but not feasible: I would need a central station then knows all the
+  other nodes position
+\item this solution is not considering the number of hop of a message has to
+  traverse
+\end{itemize}
+
+\paragraph*{Urban multi-hop broadcasting protocols} This broadcasting protocols
+use \textbf{jamming} signals to determine the next forwarder: vehicles receiving
+an alert message emit a jamming signal for a time that's proportional to the
+distance from the sender. The last one stops the hamming signal and forward the
+message.
+
+The problem of this solution is that is slow, and for this is not suitable for
+alert messages (jamming signal phase delays the transmission of the message).
