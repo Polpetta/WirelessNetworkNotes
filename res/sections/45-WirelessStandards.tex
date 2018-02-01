@@ -238,13 +238,13 @@ contention window with an inverse proportion of the distance from the sender,
 but it has the unrealistic assumption that there is an unique, constant, and
 known-a-priori transmission range.
 
-\paragraph*{Using minimum connect dominating set} The MCDS identify the minimum
-number of sets that allows you to cover the whole set\footnote{A minimum
+\subsubsection{Using minimum connect dominating set} The MCDS identify the
+minimum number of sets that allows you to cover the whole set\footnote{A minimum
   connected dominating set of a graph G is a connected dominating set with the
   smallest possible cardinality among all connected dominating sets of G. The
   connected domination number of G is the number of vertices in the minimum
   connected dominating set. See more at
-  \url{https://en.wikipedia.org/wiki/Connected_dominating_set}
+  \url{https://en.wikipedia.org/wiki/Connected_dominating_set}.
 }.
 Although it seems a good solution for this problem, it has the following
 issues:
@@ -256,11 +256,89 @@ issues:
   traverse
 \end{itemize}
 
-\paragraph*{Urban multi-hop broadcasting protocols} This broadcasting protocols
-use \textbf{jamming} signals to determine the next forwarder: vehicles receiving
-an alert message emit a jamming signal for a time that's proportional to the
-distance from the sender. The last one stops the hamming signal and forward the
-message.
+\subsubsection{Urban multi-hop broadcasting protocols} This broadcasting
+protocols uses \textbf{jamming} signals to determine the next forwarder:
+vehicles receiving an alert message emit a jamming signal for a time that's
+proportional to the distance from the sender. The last one stops the hamming
+signal and forward the message.
 
 The problem of this solution is that is slow, and for this is not suitable for
 alert messages (jamming signal phase delays the transmission of the message).
+
+\subsubsection{Fast Broadcast}
+Fast broadcast is designed to have Alert Messages covering the area of interest
+in less time possible. It uses two type of packets: \textit{Hello messages} and
+\textit{Alert messages}. Hello messages contain the sender's position and the
+maximum forward distance from which another vehicle has been heard transmitting
+another hello message. In particular it contains:
+\begin{itemize}
+\item CMBR (\textit{Current Maximum Backward Range}): the maximum backward
+  distance at which some car would be able to hear me
+\item CMFR (\textit{Current Frontward Range}): the maximum distance from which
+  I have been able to hear another car in front of me
+\end{itemize}
+
+Fast Broadcast has two phases:
+\begin{enumerate}
+\item estimation of transmission range between two vehicles (called
+  \textit{hello messages}). This phase has little overhead and it's divided in
+  rounds: at every round
+  hello messages are randomly sent
+\item transmission is used during broadcasting to reduce message number of hops
+  (\textit{alert messages}\footnote{This message includes the estimated
+  transmission range for that hop.})
+\end{enumerate}
+
+\begin{figure}
+  \centering
+  \includegraphics[scale=0.35]{fastBroadcast}
+  \caption[Hello Message propagation]{A little illustration of how hello
+    messages are delivered through the cars.}
+  \label{fig:802.11ws:helloMessageDelivery}
+\end{figure}
+
+When a car receives a message, as illustrated in
+Figure~\ref{fig:802.11ws:helloMessageDelivery}, it can be from two directions:
+in front of it (and in that case it's an update), or behind it (and in that case
+you update your transmission range).
+
+The characteristics of this multi-hop broadcast protocol for vehicular networks
+are:
+\begin{itemize}
+\item estimation of the maximum transmission range with few hello messages
+\item minimization of the number of hops to be traversed
+\item reduction of the delivery time
+\end{itemize}
+
+\paragraph*{Handling an AV} When an Abnormal Vehicle (AV) occurs, an alert
+message is generated, and received by the nearby cars. The cars that received
+the message wait a time that is proportional to the node's position with
+respect to the estimated maximum transmission range. In particular, farthest
+nodes transmit before the others: if another car that is farther from the source
+has already forwarded the alter message, then the considered car abort its
+sending procedure (since the message has already been propagated). The
+contention window during this procedure is calculated in this way:
+\begin{equation}
+\left [ \left ( \frac{MaxRange - Distance}{MaxRange} \cdot (CW_{max} - CW_{min}) \right ) + CW_{min} \right ]
+\end{equation}
+
+\paragraph*{Comparing Fast Broadcast}
+Let's compare Fast Broadcast with Static 300 and Static 100. Static 300 has a
+lot of collision for 1 km of transmission range, determining Fast Broadcast as
+the best solution. Static 100 performance are in general very poor.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[scale=0.5]{fastBroadcastCollisionComparison}
+  \caption[Fast broadcast comparison]{This histogram illustrates a comparison
+    between Fast Broadcast, Static 300 and Static 100 over 1000m of actual
+    transmission range: how is possible to see, the number of collision is very
+    high for Static 300 at this distance, while Fast Broadcast and Static 100
+    have similar results.}
+  \label{fig:802.11ws:fastBroadCastComparison}
+\end{figure}
+
+These results are due the fixed nature of the contention window of Static 300
+and Static 100, that after a certain distance start to have the same contention
+contention window for farther cars. With small contention windows there is a
+surge of collisions.
