@@ -1,7 +1,7 @@
 \chapter{802.11 Wireless Standards}
 
-Currently there are a lot of 802.11 standards. The important ones are listed    
-in the table~\ref{tab:802.11ws:list}% TODO insert table ref
+Currently there are a lot of 802.11 standards. The important ones are listed
+in the table~\ref{tab:802.11ws:list}
 
 \begin{table}[t]
 \centering
@@ -107,7 +107,9 @@ within one station using AC specific parameters.
 Whith EDCA video streams capacity drops. With more collisions I have larger
 contention windows, and with multiple streams I lose some overall bandwidth.
 
-\paragraph*{Prioritized channels} Similar to DCF, but with four priorities, EDCA offers prioritized channel, based on the QoS paraeters per traffic classes, which includes:
+\paragraph*{Prioritized channels} Similar to DCF, but with four priorities, EDCA
+offers prioritized channel, based on the QoS paraeters per traffic classes,
+which includes:
 \begin{itemize}
 \item AIFS[AC]\footnote{AIFS means \textit{Arbitration Inter-frame space}}
 \item CWmin[AC]
@@ -124,13 +126,21 @@ Using EDCA has the following advantages:
 but has the following disadvantages:
 \begin{itemize}
 \item Streams of the same priority compete: making difficult for ECDA to be able
-  to guarantee a good access, latency, bandwidth or jitter to every connection. A solution to this problem is using \textbf{admission control}.
+  to guarantee a good access, latency, bandwidth or jitter to every connection.
+A solution to this problem is using \textbf{admission control}.
 \end{itemize}
 
-\paragraph*{Admission Control} This solution allows only a limited number of peers to access the network, limiting (but not eliminating) the stream contention and reducing the latency of QoS streams.
+\paragraph*{Admission Control} This solution allows only a limited number of
+peers to access the network, limiting (but not eliminating) the stream
+contention and reducing the latency of QoS streams.
 In this way the best-effort approach is no more necessary.
-\subparagraph*{How Admission Control works} The AP advertises ACM\footnote{This is a bit that says if the AP supports Admission Control.} in beacon to indicate if admission control is mandatory for any Access Category. In this way, to use and AC that  sends AddTS (\textit{Add Traffic Specification}) Request Action Frame to AP that includes a TSPEC.
-When a new node wants to connect with the AP, the AP runs the admission control algorithm and replies with an AddTS Response Action Frame.
+\subparagraph*{How Admission Control works} The AP advertises ACM\footnote{This
+is a bit that says if the AP supports Admission Control.} in beacon to indicate
+if admission control is mandatory for any Access Category. In this way, to use
+and AC that  sends AddTS (\textit{Add Traffic Specification}) Request Action
+Frame to AP that includes a TSPEC.
+When a new node wants to connect with the AP, the AP runs the admission control
+algorithm and replies with an AddTS Response Action Frame.
 
 \section{802.11n}
 
@@ -151,7 +161,8 @@ This 802.11 version brings different enhancements.
 \item Packets aggregation
 \end{itemize}
 
-\paragraph*{Physical layer} At the physical layer, both for 2.4GHz and 5Ghz we have:
+\paragraph*{Physical layer} At the physical layer, both for 2.4GHz and 5Ghz we
+have:
 \begin{itemize}
 \item Smaller slots
 \end{itemize}
