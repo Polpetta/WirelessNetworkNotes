@@ -185,3 +185,22 @@ SISO has this additional disadvantages though:
 \end{itemize}
 
 \section{802.11p}
+
+This protocols is designed to provide connectivity to vehicles. Since it's
+still under heavy development it's not freely available at the moment.
+Governments have reserved particular channel, 5.9GHz in USA and EU. 802.11p
+allows up to 300m communication range with 6Mbps. Transfers are possible
+even at 200km/h.
+
+This wireless version uses DCF schema with a different period. A lot of
+research is going on in particular about routing schemes and MAC layers.
+
+\subsection{802.11p applications}
+
+The mayor application for this wireless standard is \textbf{safe driving}.
+When an incident is detected, alert messages are sent from the Abnormal
+Vehicle\footnote{AV is a vehicle that its behavior is not conform to some
+threshold}\todo{The footnote needs a rewrite} to the following vehicles, via
+broadcast. This messages are faster than the normal human reaction, and can
+prevent chained car accidents. How much time does it take to the following
+vehicles to receive the message to break? The latency it's an important aspect.
