@@ -165,6 +165,23 @@ This 802.11 version brings different enhancements.
 have:
 \begin{itemize}
 \item Smaller slots
+\item Better modulation (OFDM)
+\item MIMO (\textit{Multiple Input Multiple Output}) radio technology with
+spatial multiplexing $\to$ transmit and receive with multiple radios
+simultaneously in some spectrum. MIMO is useful because one antenna can break
+but the communication would still be possible, thing that would not be possible
+with SISO (\textit{Single Input Single Output}), that, on the other hand, has a
+lower-cost and has a simpler implementation than MIMO\footnote{
+SISO has this additional disadvantages though:
+\begin{itemize}
+\item the energy is wasted sending in all directions
+\item it's sensitive to interference from all directions
+\end{itemize}
+}. At the end of the day, MIMO presents the following advantages:
+\begin{itemize}
+ \item the signal has more power
+ \item transmits twice the amount of data
+\end{itemize}
 \end{itemize}
 
 \section{802.11p}
