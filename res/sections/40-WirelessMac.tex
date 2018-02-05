@@ -1,0 +1,110 @@
+\chapter{Wireless MAC}
+
+
+Usually in a home there are a lot of wireless devices: there are different
+requirements, from low delay to high bandwidth availability and high
+reliability.
+
+\textit{Home routers} can be a bottleneck\footnote{
+  Typically the bottlenecks are at the edges of the network:
+  \begin{itemize}
+  \item Server bandwidth
+  \item Last mile to router
+  \item In home routers (wireless bandwidth)
+  \end{itemize}
+}
+of the network traffic, acting as a Gateway between in-home devices and the
+outside world.
+Most network protocols developed assuming mostly TCP-based traffic. This
+assumption needs a radical reconsideration when UDP-based services for
+entertainment come into picture (because it's extremely delay sensitive).
+
+\section{Issues}
+
+One of the issue of wireless MAC is the packet retransmission, that cause delays
+that can be extremely dangerous for UDP-based services. This delay is increased
+with long TCP flows (e.g. FTP).
+
+\subsection{Solutions}
+
+In order to solve this problem several solutions were implemented. The first
+solution is to set the MAC packet retransmission to 3. This will ensure the
+maximum throughput\footnote{
+  The throughput is the maximum rate of production or the maximum rate at which
+  something can be processed in networking: is the rate of successful message
+  delivery over a communication channel.
+}
+possible. This number of retransmission will ensure less jitter, so like 1-2
+packets lost every 900 (that's 0.2\%).
+
+\textbf{Jitter} is the deviation from true periodicity of a presumably
+periodic signal, often in relation to reference clock signal. Jitter is a
+significant, and usually undesired, factor in the design of almost all
+communications links.
+
+\subsubsection{SAP-LAW}
+
+SAP-LAW means Smart Access Point with Limited Advertisement Window.
+
+Usually, TCP behavior is too aggressive, because it continuously probes the link
+for more bandwidth, and call fill up the AP (Access Point) buffer with its
+packets. A solution can be change TCP behavior to allow UDP based applications
+to be not jeopardized, granting high goodputs for downloading applications and
+avoiding queues, that are bad for real-time applications.
+
+\paragraph*{Smart Access Point} This technique exploit the advertised window to
+limit the bandwidth utilized by TCP flows, limiting the speed of the sender. The
+AP can even avoid using buffer, having all the information about UDP bandwidth
+usage and can change the advertise window of TCP flows. The \textit{maxTCPRate}
+is calculated with this formula:
+\begin{equation}
+  maxTCPRate(t) = \frac{(C - UDPTraffic(t))}{\sharp TCPFlows(t)}
+\end{equation}
+
+Where $C$ is the total capacity of the channel.
+
+The AP can change on-the-fly the advertise windows, that's:
+\begin{equation*}
+  min \{clientAdvertiseWindow,\ maxTCPRate \}
+\end{equation*}
+
+This make SAP-LAW easy to deploy as it requires modifications only at the AP.
+
+\paragraph*{About TCP unfairness} A TCP throughput is inversely proportional to
+the RTT length, causing different throughput based on the RTT (even with the
+same windows). This leads to a new \textit{maxTCPRate} formula, that includes
+RTT:
+\begin{equation}
+maxTCPRate_{i}(t) = \frac{(C - UDPTraffic(t)) \cdot RTT_i)}{\sum
+\frac{RTT_i}{avg - RTT_{min}}}
+\end{equation}
+
+With this new formula, congestion windows are now based on the RRT\footnote{
+  The previous formula was the ``easier'' version, and it had the flaw of
+sharing the same bottleneck with different RTTs, leading to RTT-unfairness.
+}.
+
+% Please add the following required packages to your document preamble:
+% \usepackage{graphicx}
+\begin{table}[t]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|p{4.5cm}|p{5cm}|p{6.5cm}|}
+\hline
+\textbf{TCP SACK}      & \textbf{TCP Vegas}                      &
+\textbf{SAP-LAW}
+          \\ \hline
+Queuing                & No queuing                              & No queuing
+                                                                             \\
+\hline
+Unfair bandwidth usage & Unfair bandwidth usage                  & Fair
+bandwidth usage
+     \\ \hline
+                       & No compatibility versus other legacy TC & TCP
+compatibility (with old TCP Protocols) as is used on top of legacy transport
+protocols \\ \hline
+\end{tabular}%
+}
+\caption{Comparison between different TCP version}
+\label{tab:WMAC:SAP-LAWComparison}
+\end{table}

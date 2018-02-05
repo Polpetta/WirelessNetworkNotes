@@ -91,3 +91,14 @@ ETT
 AODV's
 MH
 thru
+retransmission
+Jitter
+jitter
+goodputs
+maxTCPRate
+UDPTraffic
+TCPFlows
+clientAdvertiseWindow
+RRT
+RTTs
+UDP
