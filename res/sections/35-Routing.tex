@@ -1,7 +1,7 @@
 \chapter{Routing}
 
 Routing determine the ``good''\footnote{The minimum path typically} path (
-sequence of routers) through network from source to destination.
+sequence of routers) thru network from source to destination.
 Routing protocols use graphs as a mathematical abstraction.
 
 \section{Typologies of routing}
@@ -70,7 +70,7 @@ on mobile systems.
 
 In wireline networks we have symmetric links, limited redundancy and fixed
 topology, instead in wireless has asymmetric links, random redundancy with
-unplanned, dynamic links. With all thess peculiarities, traditional routing
+unplanned, dynamic links. With all these peculiarities, traditional routing
 algorithms for MANETS\footnote{MANET stands for \textit{Metropolitan Area
     Network}} are inefficient, and the new one must rely on data link
 information, not just network layer updates\footnote{Layer updates only
@@ -106,7 +106,7 @@ proactive or reactive, and are classified as:
 \item table-driven (proactive) $\to$ up-to-date routing information are
   maintained
 \item source-initiated (on demand/demand driven) $\to$ create routes only when
-needed and mantain them until they are no more useful to the source.
+needed and maintain them until they are no more useful to the source.
 \item hybrid protocols $\to$ combination of proactive and reactive protocols
 \end{itemize}
 
@@ -125,14 +125,16 @@ There are different typologies, that will be described below.
 \subsubsection{DSDV (Destination Sequenced Distance Vector)}
 
 Based on Bellman-Ford algorithm it has characteristics similar to Dijkstra's
-algorithm, but with slower performance and a better versatility (it supports
-negative weights). With DSDV, every route has a sequence number and packets are
-transmitted according to the routing table: each node has a routing table with
+algorithm, but with \textbf{slower performance and a better versatility}
+(it supports negative weights).
+
+With DSDV, every route has a sequence number and packets are transmitted
+according to the routing table: each node has a routing table with
 all the nodes listed, and each node has its own sequence number.
-The routing table consistency is kept transmitting periodically updates and when
-two routes to a destination is received from two different neighbours the one
-with the greatest destination sequence number is chosen, otherwise the smallest
-leap-count is kept % TODO check this part
+Each node periodically transmits updates to keep table consistency.
+When two routes to a destination are received from two different neighbours
+the one with the greatest destination sequence number is chosen, otherwise the
+smallest hop-count is kept.
 Continuously updating the routing table can generate a lot of overhead, and
 there are two ways to carry updates:
 \begin{itemize}
@@ -154,7 +156,7 @@ In general, OLSR is good for large and dense networks.
 
 In this typology, nodes are organized into a hierarchy of clusters: every
 cluster has a \textit{cluster master (clusterhead)} that forward packets from
-the other sets node.
+the other sets node using DSDV.
 
 \subsection{Reactive protocols}
 The source builds routing on demand with a ``flooding'' method, but maintains
@@ -178,8 +180,8 @@ Source-initiated on-demand routing protocols have the following characteristics:
 This routing protocol, based on DSDV, exchange the routing table only along a
 given route. In order to discover routes, there is a specific package, RREQ
 (\textit{Route Request Packet}). The packet is sent from the sender to the
-receiver, and when it's received, it's pinged back to the source, creating a
-path.\todo{Is an RREP or an RREQ that is sent back? Need to be checked!}
+receiver, and when it's received, a RREP(\textit{Route Replay Packet}) is sent
+back to the source, creating a path.
 
 Routes are timed: after a while they expire: unicast and multicast routes are
 kept until a timeout happens.
