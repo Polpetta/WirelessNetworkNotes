@@ -19,3 +19,12 @@ script:
 - make ci
 before_deploy:
 - git fetch --tags
+deploy:
+  provider: releases
+  api_key:
+    secure: jod+4E7SLNREKYnp9OucnpY3AIseae3ksVj+OezvOqGr5wL7uwSq6JclEw22p2AVSECIrjfOa3H60y2uDEKY+mxNb9kWEVaor6QjjP+rsRW6rkIXgmMr3pyVxAkt/UAZq6hGWrK38+et0af8bS96yVeBigIzSzEjpNtM63vf+Ixs94B4f0NsLiy/wsnk9ZEvzFykStXKlf1ASJWyAKxu4W/UvE4ksugsh1Yogk2YGgABOkRKgHy4ZqXp2jJj3kKz3LoYoBpg8o18IUIqh0Ubo3vN6htp1W9CjBTGswY4dbhESyoo6snJon+nj34RTfVLP05d4ouKDY9kDG19rviHdLD0T6Zd5MQ3TYBLudHCqSg+FWwA/4lkh0hwd2T/I1XNdFWlDj+Bme9LTCypHlfrgVZb2AZEZqeLfnG3wTMCmNigbOLO95q++38GVl47HepGVFm8UEy+ML2Vk6PiDEFmkicEgkrCBa9jb3wf7NXFsZuyUMslBgm5F6ZwCAy2jRqzgI6v6RA2Q42ssM4omu5+GrYrCgVDZsSYfdHpOGjKk8gZ1d7D2wluVa/0C27vpA0UFBoD7sLwdMnOZcHrWnNPndYmn7WqPNXOHCFN+XPVE8hPeMW/Rx7sudHalj6eUdRbRvDJfBwtBZE+sGDJM69Lxno2ZKa6kLBa4jYLiVi2eag=
+  file: WirelessNetworkNotes.pdf
+  skip_cleanup: true
+  on:
+    repo: EmanueleC/WirelessNetworkNotes
+    tags: true
