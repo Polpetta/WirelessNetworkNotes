@@ -89,7 +89,7 @@ Some types are Patch/panel and Yagi.
 \subsection{Highly-directional Antennas} They are used by parabolic 
 dishes and grids. They reach very far, covering a distance of up to 60 km 
 assuming no obstacles in-between (LOS=Line Of Sight). Putting the sender and the 
-receiver two far away causes the signal to hump against the curve of the Earth. 
+receiver too far away causes the signal to hump against the curve of the Earth. 
 Highly-directional Antennas need to be placed carefully, for the signal to be 
 received they have to be perfectly aligned and prevent wind or bad weather from 
 tilting them.
@@ -135,8 +135,8 @@ radio transmission coverage radius. Depending on the transmission power of the
 nodes we can have different situations:
 \begin{itemize}
 \item Unidirectional Link: sometimes improperly referred as 
-  "asymmetric link" (we have an asymmetric link if A transmits at 10Mb/s while B 
-  transmits at 2Mb/s), we have a unidirectional link if, given A and B, A
+  ``asymmetric link'' (we have an asymmetric link if A transmits at 10Mb/s while
+  B transmits at 2Mb/s), we have a unidirectional link if, given A and B, A
   receives B but B cannot receive A. This is the case, for example, when B is
   just broadcasting or flooding the channel. Note that with a unidirectional
   link we can't share a file between A and B: B will be waiting for an ACK that
@@ -147,14 +147,14 @@ nodes we can have different situations:
 
 \section{Examples of wireless network technology}
 
-\subsubsection{Frequency Hopping Spread Spectrum}
+\subsection{Frequency Hopping Spread Spectrum}
 To make a better use of the whole band, we can divide it in smaller frequencies.
 The sender and the receiver will know the jump sequence and transmit in a
-``secret'' pattern, since others will not it the traffic will appear as impulse
-noise and so the communication becomes more difficult to detect. Because of the
-continuous hopping, it has a low throughput.
+``secret'' pattern, to others this will appear as impulse noise and so the
+communication will be more difficult to detect. Because of the continuous
+hopping, it has a low throughput.
 
-\subsubsection{Infrared Technology (IR)}
+\subsection{Infrared Technology (IR)}
 Requires short rage and line of 
 sight (LOS). It uses frequencies just below the visible light and cannot 
 penetrate opaque objects. It has a high bandwidth.
