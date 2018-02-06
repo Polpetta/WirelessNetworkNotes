@@ -130,16 +130,16 @@ consider ACKs.
 \subsubsection{Additive Increase/Multiplicative Decrease}
 
 The purpose is to adjust changes in the available capacity.
-We actually have an additive increase because we increment the cw by one packet
-per RTT, which is +1 every time an ACK is received and a Multiplicative Decrease
-because, every time a drop is detected via triple-dupacks we set the
+We actually have an additive increase because we increment the $cw$ by one
+packet per RTT, which is +1 every time an ACK is received and a Multiplicative
+Decrease because, every time a drop is detected via triple-dupacks we set the
 $cw=\frac{cw}{2}$. If we plot the cwnd size (or the KB sent) over time we get a
 typical saw tooth behavior (Figure~\ref{fig:tcp:sawtooth}). We can see how the
 cwnd grows linearly in time and that TCP sends a cwnd's worth of bytes each RTT.
 
 In practice we have:
 \begin{itemize}
-  \item increment = $frac{1}{cwnd}$
+  \item increment = $\frac{1}{cwnd}$
   \item cwnd += increment
   \item cwnd = $\frac{cwnd}{2}$ if a timeout occurs
 \end{itemize}
@@ -166,26 +166,29 @@ starting connection or when connection goes dead waiting for timeout.
   of cwnd may get lost)
 \end{itemize}
 
-This phase is not ``slow'', it is exponential!
-
+Keep in mind that this phase is not ``slow'', it is exponential.
 \textbf{SSTHRESH} (slow start threshold) indicates when to begin additive
-increase phase.
+increase phase and it's set to one half of $cwnd$ when a packet loss happens.
+So, SSTHRESH goes through multiplicative decrease for each packet loss (because
+also the $cwnd$ does so).
+If we have $cwnd \ge SSTHRESH$ we use congestion avoidance.
 
-It is set to one half of cwnd on packet loss. So, SSTHRESH goes through
-multiplicative decrease for each packet loss (because also the cwnd does so).
-
-If we have cwnd>=SSTHRESH we use congestion avoidance.
-Initially SSTHRESH is very large on connection setup.
-Since detecting losses with time out is considered to be an indication 
+SSTHRESH is very large on connection setup.
+Since detecting losses with timeout is considered to be an indication 
 of severe congestion, when a timeout occurs:	
 \begin{itemize}
-\item $SSTHRESH = \frac{cwnd}{2}$ (multiplicative decrease)
-\item $cwnd=1$
-\item $RTO=RTO \cdot 2$
-\item Enter slow start
+  \item $SSTHRESH = \frac{cwnd}{2}$ (multiplicative decrease)
+  \item $cwnd=1$
+  \item $RTO=RTO \cdot 2$
+  \item Enter slow start
 \end{itemize}
 
-Note that cwnd and SSTHRESH always $\ge$ 1 MSS. 
+Note that $cwnd$ and SSTHRESH always $\ge$ 1 MSS\footnote{
+MSS stands for \textit{Maximum Segment Size}, and it's a parameter of the
+options field of the TCP header that specifies the largest amount of data,
+specified in bytes, that a computer or communications device can receive in a
+single TCP segment.
+}. 
 
 \begin{figure}[t]
   \centering
@@ -193,3 +196,52 @@ Note that cwnd and SSTHRESH always $\ge$ 1 MSS.
   \caption{TCP behavior using AIMD and Slow Start}			
   \label{fig:tcp:TCPBeh}
 \end{figure}
+
+\subsubsection{Summary}	
+	Summarizing, the complete congestion control functionality works in 2 
+phases:
+\begin{itemize}
+  \item \textbf{Slow Start Phase}: until $cwns \le SSTHRESH$.
+Exponential growth, at each returning ACK a new packet is transmitted 
+($cwnd=cwnd+1$) and at every RTT $cwnd=cwnd \cdot 2$; 
+  \item \textbf{Congestion Avoidance}: when $cwnd > SSTHRESH$. We 
+switch to linear growth, at each returning ACK a new packet is transmitted 
+($cwnd=\frac{cwnd+1}{cwnd}$) and at every RTT $cwnd=cwnd+1$.
+\end{itemize}
+	
+We have two ways to detect losses: 
+\begin{itemize}
+  \item \textbf{Timeouts}: we set $SSTHRESH=\frac{cwnd}{2}$ and $cwnd=1$
+(or, restart in Slow Start Phase);
+  \item \textbf{Three Dupacks}: $SSTHRESH=\frac{cwnd}{2}$, $cwnd=\frac{cwnd}{2}$
+(and restart from congestion avoidance phase).		 
+\end{itemize}
+	
+Finally, see Figure~\ref{fig:tcp:TCPCC} and~\ref{fig:tcp:TCPSawSum} for details.
+	
+\begin{figure}[t]
+  \centering
+  \includegraphics[scale=0.5]{TCPCC}
+  \caption{TCP Congestion Control Summary}
+  \label{fig:tcp:TCPCC}
+\end{figure}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[scale=0.4]{TCPSawSum}
+  \caption{TCP Saw Tooth Explained}
+  \label{fig:tcp:TCPSawSum}
+\end{figure}
+
+\subsection{Loss recovery}
+There are two ways to detect losses: time outs and three dupacks.
+With timeout expiration:
+\begin{itemize}
+  \item $ssthresh = \frac{cwnd}{2}$
+  \item $cwnd = 1$ (so, restart in SS phase)
+\end{itemize}
+With three dupacks:
+\begin{itemize}
+  \item $ssthresh = \frac{cwnd}{2}$
+  \item $cwnd = \frac{cwnd}{2}$ (so, restart in cong. avoidance phase)
+\end{itemize}
