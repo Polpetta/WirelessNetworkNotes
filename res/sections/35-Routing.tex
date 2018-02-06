@@ -190,16 +190,16 @@ kept until a timeout happens.
 \begin{itemize}
 \item discovers routes as and where necessary
 \item routes are maintained just as long as necessary
-\item sequence number gets increased every time the node notices changes in the neighbourhood topology
+\item sequence number increases every time the node notices changes in the neighbourhood topology
 \end{itemize}
 
 \paragraph*{How a package is sent} AODV use the following procedure to send a
 packet:
+\begin{multicols}{2}
 \begin{enumerate}
-\item routing table check to determine if the current route to destination is
-  present. If so, forward the packet to the next hop, otherwise, go to step 2
-\item begin discovery process with an RREQ\todo{Split the listing in
-  two columns} \footnote{
+\item check routing table to determine if the current route to destination is
+  present. If so, forward the packet to the next hop, otherwise, go to step 2.
+\item begin route discovery process with an RREQ \footnote{
   This packet is initially sent with a small time-to-live (TTL), to limit its
   propagation and avoid an excessive flooding.
   The packet contains:
@@ -211,7 +211,7 @@ packet:
   \end{itemize}
 }
 \item once an intermediate node receives a RREQ, the node sets up a reverse
-  route entry for the source node in its route table
+  route entry for the source node in its route table.
 \item when RREQ reaches destination in order to respond to RREQ a node should
   have it in its route table (the route has to be unexpired). If conditions are
   true the node responds to RREQ by sending a RREP back using unicasting
@@ -220,6 +220,7 @@ packet:
   RREQ will be able to reach the destination. Intermediate nodes can send an
   RREQ if they know a more recent path of the one previously known to senders.
 \end{enumerate}
+\end{multicols}
 
 \paragraph*{Broadcast} The broadcast is performed by flooding the network, and
 a sequence number on the packets is used to stop loops from happening, meaning
@@ -234,15 +235,17 @@ Using the flooding to broadcast packets has the following pros:
 \end{itemize}
 ...but it has some cons too:
 \begin{itemize}
-\item very high overhead potentially
-\item possibility of collision during packet propagation
+\item very high overhead potentially (in the worst case, all nodes reachable from
+sender may receive the packet)
+\item possibility of collision during packet propagation (despite the flooding, the
+destination may not receive the packet at all, if collision happens!)
 \end{itemize}
 
 \subsubsection{DSR (Dynamic Source Routing)}
 
 With this ad-hoc routing protocol nodes maintains route caches, and the full
-source-route is aggregated in RREQ and sent back in RREP. Each data packet has
-full source route, causing a little overhead increment.
+source-route is aggregated in RREQ and sent back in RREP. \textbf{Each data packet
+has full source route}, causing a little overhead increment.
 Route discovery starts when the sender initiates requests and intermediate nodes
 add their address onto request so that when the packet reaches destination it
 contains all the full path.
