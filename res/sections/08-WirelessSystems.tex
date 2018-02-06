@@ -31,8 +31,8 @@ breaks data into packets. In fact, even though data arrives already broken,
 access points break it further, because the smaller the packet transmitted, the 
 better. Obviously, this becomes a problem when we relate it to overhead: since 
 overhead has a fixed size, independent from the packet's size, we may find 
-ourselves in the situation when, faced with 1000 data +40 overhead we end up 
-with 500 data + 40 overhead plus 500 data + 40 overhead.
+ourselves in the situation where, faced with $1000\ data + 40\ overhead$ we end
+up with $500\ data + 40\ overhead$ plus $500\ data + 40\ overhead$.
 We still prefer splitting, because, when facing a big error rate we 
 don't want to lose all the packets.
 The WLAN channel access is shared using random access and this system 
