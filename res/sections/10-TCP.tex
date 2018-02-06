@@ -130,16 +130,16 @@ consider ACKs.
 \subsubsection{Additive Increase/Multiplicative Decrease}
 
 The purpose is to adjust changes in the available capacity.
-We actually have an additive increase because we increment the cw by one packet
-per RTT, which is +1 every time an ACK is received and a Multiplicative Decrease
-because, every time a drop is detected via triple-dupacks we set the
+We actually have an additive increase because we increment the $cw$ by one
+packet per RTT, which is +1 every time an ACK is received and a Multiplicative
+Decrease because, every time a drop is detected via triple-dupacks we set the
 $cw=\frac{cw}{2}$. If we plot the cwnd size (or the KB sent) over time we get a
 typical saw tooth behavior (Figure~\ref{fig:tcp:sawtooth}). We can see how the
 cwnd grows linearly in time and that TCP sends a cwnd's worth of bytes each RTT.
 
 In practice we have:
 \begin{itemize}
-  \item increment = $frac{1}{cwnd}$
+  \item increment = $\frac{1}{cwnd}$
   \item cwnd += increment
   \item cwnd = $\frac{cwnd}{2}$ if a timeout occurs
 \end{itemize}
