@@ -130,16 +130,16 @@ consider ACKs.
 \subsubsection{Additive Increase/Multiplicative Decrease}
 
 The purpose is to adjust changes in the available capacity.
-We actually have an additive increase because we increment the cw by one packet
-per RTT, which is +1 every time an ACK is received and a Multiplicative Decrease
-because, every time a drop is detected via triple-dupacks we set the
+We actually have an additive increase because we increment the $cw$ by one
+packet per RTT, which is +1 every time an ACK is received and a Multiplicative
+Decrease because, every time a drop is detected via triple-dupacks we set the
 $cw=\frac{cw}{2}$. If we plot the cwnd size (or the KB sent) over time we get a
 typical saw tooth behavior (Figure~\ref{fig:tcp:sawtooth}). We can see how the
 cwnd grows linearly in time and that TCP sends a cwnd's worth of bytes each RTT.
 
 In practice we have:
 \begin{itemize}
-  \item increment = $frac{1}{cwnd}$
+  \item increment = $\frac{1}{cwnd}$
   \item cwnd += increment
   \item cwnd = $\frac{cwnd}{2}$ if a timeout occurs
 \end{itemize}
@@ -166,17 +166,15 @@ starting connection or when connection goes dead waiting for timeout.
   of cwnd may get lost)
 \end{itemize}
 
-This phase is not ``slow'', it is exponential!
-
+Keep in mind that this phase is not ``slow'', it is exponential.
 \textbf{SSTHRESH} (slow start threshold) indicates when to begin additive
-increase phase.
+increase phase and it's set to one half of $cwnd$ when a packet loss happens.
+So, SSTHRESH goes through multiplicative decrease for each packet loss (because
+also the $cwnd$ does so).
+If we have $cwnd \ge SSTHRESH$ we use congestion avoidance.
 
-It is set to one half of cwnd on packet loss. So, SSTHRESH goes through
-multiplicative decrease for each packet loss (because also the cwnd does so).
-
-If we have cwnd>=SSTHRESH we use congestion avoidance.
-Initially SSTHRESH is very large on connection setup.
-Since detecting losses with time out is considered to be an indication 
+SSTHRESH is very large on connection setup.
+Since detecting losses with timeout is considered to be an indication 
 of severe congestion, when a timeout occurs:	
 \begin{itemize}
 \item $SSTHRESH = \frac{cwnd}{2}$ (multiplicative decrease)
@@ -185,7 +183,12 @@ of severe congestion, when a timeout occurs:
 \item Enter slow start
 \end{itemize}
 
-Note that cwnd and SSTHRESH always $\ge$ 1 MSS. 
+Note that $cwnd$ and SSTHRESH always $\ge$ 1 MSS\footnote{
+MSS stands for \textit{Maximum Segment Size}, and it's a parameter of the
+options field of the TCP header that specifies the largest amount of data,
+specified in bytes, that a computer or communications device can receive in a
+single TCP segment.
+}. 
 
 \begin{figure}[t]
   \centering
