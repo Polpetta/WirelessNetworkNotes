@@ -197,7 +197,7 @@ kept until a timeout happens.
 packet:
 \begin{multicols}{2}
 \begin{enumerate}
-\item Check routing table to determine if the current route to destination is
+\item check routing table to determine if the current route to destination is
   present. If so, forward the packet to the next hop, otherwise, go to step 2.
 \item begin route discovery process with an RREQ \footnote{
   This packet is initially sent with a small time-to-live (TTL), to limit its
@@ -210,9 +210,9 @@ packet:
   \item destination sequence number
   \end{itemize}
 }
-\item Once an intermediate node receives a RREQ, the node sets up a reverse
+\item once an intermediate node receives a RREQ, the node sets up a reverse
   route entry for the source node in its route table.
-\item When RREQ reaches destination in order to respond to RREQ a node should
+\item when RREQ reaches destination in order to respond to RREQ a node should
   have it in its route table (the route has to be unexpired). If conditions are
   true the node responds to RREQ by sending a RREP back using unicasting
   and not flooding to the source (using reverse path), otherwise the hop count
