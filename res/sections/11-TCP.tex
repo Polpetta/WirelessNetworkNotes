@@ -101,7 +101,7 @@ return to 1 or goes back to the slow start threshold (depending on the TCP
 version in use).
 \begin{figure}[h]
   \centering
-  \includegraphics[scale=0.5]{CongestionWindow}
+  \includegraphics[scale=0.4]{CongestionWindow}
   \caption{Congestion Window schema}
   \label{fig:tcp:cwschema}
 \end{figure}
@@ -114,20 +114,18 @@ The receiver uses an \textbf{Advertise Window} to manage flow control\footnote{
 }. The adWindow is the max number of bytes that it can receive (basically how
 much space is left in the buffer). It is communicated back to the sender in the
 ACK. 
-On the other hand, the sender's actual window is the \textbf{sending window}
-and 
+On the other hand, the sender's actual window is the \textbf{Sending Window} and 
 it represents the actual bytes sent out. It corresponds to the minimum between 
 its congestion window and the receiver's advertised window
 ($min(congestion window,\ advertise window)$). 
 We can think of the network channel as of a tube and our objective is to 
 keep it full at any time (otherwise we would be wasting bandwidth). By
-multiplying the 
-bandwidth by the delay ($delay = \frac{RTT}{2}$) we get how much data we can
-have in a connection without clogging it. Incidentally, this is also the max
-size of the congestion window. When using TCP, to get the size of the congestion
-window we calculate $Bandwidth \cdot RTT$, because we also have to consider
-ACKs, which are very small and can be 
-ignored.\todo{These formulas are not clear enough, please check it out!}
+multiplying the bandwidth by the delay ($delay = \frac{RTT}{2}$) we get how much
+data we can have in a connection without clogging it. Incidentally, this is also
+the max size of the congestion window. When using TCP, to get the size of the
+congestion window we calculate $Bandwidth \cdot RTT$, because we also have to
+consider ACKs.
+\todo{These formulas are not clear enough, please check it out!}
 
 \subsubsection{Additive Increase/Multiplicative Decrease}
 
