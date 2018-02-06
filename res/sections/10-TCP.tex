@@ -40,10 +40,10 @@ slows down when there is a loss of packets.
 
 \section{Reliability in TCP}
 Timeouts are used to detect lost packets: this 
-requires setting an RTO (Retransmission Timeout). If the ACK is lost, after 
-waiting the RTO, we retransmit that packet. There are obviously some issues: how
-much should the RTO be? Are we sure that, in wireless networks, a missing ACK 
-equals a missing packet?
+requires setting an RTO (\textit{Retransmission Timeout}). If the ACK is lost,
+after waiting the RTO, we retransmit that packet. There are obviously some
+issues: how much should the RTO be? Are we sure that, in wireless networks,
+a missing ACK equals a missing packet?
 As for the optimal setting of the RTO, we usually want to wait at least 
 one RTT (\textit{Round Trip Time}) before retransmitting. This values have to be
 calculated accurately, because a low RTO means unneeded retransmissions, while 
@@ -73,32 +73,38 @@ duplicate ACK (dupack).
 Duplicate ACKs occur in case of packet loss, packet re-ordering or 
 window update. Generally, we can assume that the receipt of 3 or more dupacks 
 indicates a packet loss and so we don't need to wait for the timeout to 
-retransmit. This is a faster way to detect packet loss, since the name Fast 
-Retransmit.
+retransmit. This is a faster way to detect packet loss, since the name
+\textbf{Fast Retransmit}.
 Instead of waiting $4 \cdot RTT$ we resend after $1 \cdot RTT$, which is after
 three or ore dupacks.
-Duplicate ACKs can happen due to loss of packets, packets re-ordering, flow
+Duplicate ACKs can happen due to loss of packets, packets re-ordering or flow
 control window update.
 
 \section{Fast Recovery}
 
 TCP normally increases the number of 
-packets sent by 1 every RTT and, very time a packet is lost, it restarts form 1.
-In Fast Recovery, instead of going back to 1, we start at SSTHRESH
-(\textit{Slow start threshold}), a threshold usually put at about 1/2 of where
-we where. Note that even using Fast Recovery we don't have an optimal situation
-for wireless networks, having lost a packet due to network errors doesn't mean I
-have bandwidth problems and so it doesn't make any sense to slow down restarting
-from 1/2, we should just resend the packet.
+packets sent by 1 every RTT and, every time a packet is lost, it restarts form
+1. In Fast Recovery, instead of going back to 1, we start at SSTHRESH
+(\textit{Slow start threshold}), a threshold usually put at about $\frac{1}{2}$
+of where we were. Note that even using Fast Recovery we don't have an optimal
+situation for wireless networks, having lost a packet due to network errors
+doesn't mean I have bandwidth problems and so it doesn't make any sense to slow
+down restarting from $\frac{1}{2}$, we should just resend the packet.
 
 \subsection{Congestion Window}
-A Congestion Window ($cw$) is used to keep sender for overrunning the network
-sending too many packets. A $cw$ sets the number of packets without ACK that can
-be currently traveling in the network. The window starts small and, every time
-a whole window has been received (ACKs have been sent back), the window
-increases by 1. Otherwise, if some packets are lost, the window either return to
-1 or goes back to the slow start threshold (depending on the TCP version in
-use).
+A Congestion Window ($cw$) is used to keep the sender for overrunning the
+network sending too many packets. A $cw$ sets the number of packets without ACK
+that can be currently traveling in the network. The window starts small and,
+every time a whole window has been received (ACKs have been sent back), the
+window increases by 1. Otherwise, if some packets are lost, the window either
+return to 1 or goes back to the slow start threshold (depending on the TCP
+version in use).
+\begin{figure}[h]
+  \centering
+  \includegraphics[scale=0.4]{CongestionWindow}
+  \caption{Congestion Window schema}
+  \label{fig:tcp:cwschema}
+\end{figure}
 
 \section{Flow control}
 
@@ -108,20 +114,18 @@ The receiver uses an \textbf{Advertise Window} to manage flow control\footnote{
 }. The adWindow is the max number of bytes that it can receive (basically how
 much space is left in the buffer). It is communicated back to the sender in the
 ACK. 
-On the other hand, the sender's actual window is the \textbf{sending window}
-and 
+On the other hand, the sender's actual window is the \textbf{Sending Window} and 
 it represents the actual bytes sent out. It corresponds to the minimum between 
 its congestion window and the receiver's advertised window
 ($min(congestion window,\ advertise window)$). 
 We can think of the network channel as of a tube and our objective is to 
 keep it full at any time (otherwise we would be wasting bandwidth). By
-multiplying the 
-bandwidth by the delay ($delay = \frac{RTT}{2}$) we get how much data we can
-have in a connection without clogging it. Incidentally, this is also the max
-size of the congestion window. When using TCP, to get the size of the congestion
-window we calculate $Bandwidth \cdot RTT$, because we also have to consider
-ACKs, which are very small and can be 
-ignored.\todo{These formulas are not clear enough, please check it out!}
+multiplying the bandwidth by the delay ($delay = \frac{RTT}{2}$) we get how much
+data we can have in a connection without clogging it. Incidentally, this is also
+the max size of the congestion window. When using TCP, to get the size of the
+congestion window we calculate $Bandwidth \cdot RTT$, because we also have to
+consider ACKs.
+\todo{These formulas are not clear enough, please check it out!}
 
 \subsubsection{Additive Increase/Multiplicative Decrease}
 
