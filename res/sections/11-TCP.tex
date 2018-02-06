@@ -177,10 +177,10 @@ SSTHRESH is very large on connection setup.
 Since detecting losses with timeout is considered to be an indication 
 of severe congestion, when a timeout occurs:	
 \begin{itemize}
-\item $SSTHRESH = \frac{cwnd}{2}$ (multiplicative decrease)
-\item $cwnd=1$
-\item $RTO=RTO \cdot 2$
-\item Enter slow start
+  \item $SSTHRESH = \frac{cwnd}{2}$ (multiplicative decrease)
+  \item $cwnd=1$
+  \item $RTO=RTO \cdot 2$
+  \item Enter slow start
 \end{itemize}
 
 Note that $cwnd$ and SSTHRESH always $\ge$ 1 MSS\footnote{
@@ -196,3 +196,52 @@ single TCP segment.
   \caption{TCP behavior using AIMD and Slow Start}			
   \label{fig:tcp:TCPBeh}
 \end{figure}
+
+\subsubsection{Summary}	
+	Summarizing, the complete congestion control functionality works in 2 
+phases:
+\begin{itemize}
+  \item \textbf{Slow Start Phase}: until $cwns \le SSTHRESH$.
+Exponential growth, at each returning ACK a new packet is transmitted 
+($cwnd=cwnd+1$) and at every RTT $cwnd=cwnd \cdot 2$; 
+  \item \textbf{Congestion Avoidance}: when $cwnd > SSTHRESH$. We 
+switch to linear growth, at each returning ACK a new packet is transmitted 
+($cwnd=\frac{cwnd+1}{cwnd}$) and at every RTT $cwnd=cwnd+1$.
+\end{itemize}
+	
+We have two ways to detect losses: 
+\begin{itemize}
+  \item \textbf{Timeouts}: we set $SSTHRESH=\frac{cwnd}{2}$ and $cwnd=1$
+(or, restart in Slow Start Phase);
+  \item \textbf{Three Dupacks}: $SSTHRESH=\frac{cwnd}{2}$, $cwnd=\frac{cwnd}{2}$
+(and restart from congestion avoidance phase).		 
+\end{itemize}
+	
+Finally, see Figure~\ref{fig:tcp:TCPCC} and~\ref{fig:tcp:TCPSawSum} for details.
+	
+\begin{figure}[t]
+  \centering
+  \includegraphics[scale=0.5]{TCPCC}
+  \caption{TCP Congestion Control Summary}
+  \label{fig:tcp:TCPCC}
+\end{figure}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[scale=0.4]{TCPSawSum}
+  \caption{TCP Saw Tooth Explained}
+  \label{fig:tcp:TCPSawSum}
+\end{figure}
+
+\subsection{Loss recovery}
+There are two ways to detect losses: time outs and three dupacks.
+With timeout expiration:
+\begin{itemize}
+  \item $ssthresh = \frac{cwnd}{2}$
+  \item $cwnd = 1$ (so, restart in SS phase)
+\end{itemize}
+With three dupacks:
+\begin{itemize}
+  \item $ssthresh = \frac{cwnd}{2}$
+  \item $cwnd = \frac{cwnd}{2}$ (so, restart in cong. avoidance phase)
+\end{itemize}
