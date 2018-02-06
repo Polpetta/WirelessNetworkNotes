@@ -2,7 +2,12 @@
 \section{TCP versions}
 
 \subsection{TCP Tahoe}
-Characteristics:
+One of the first protocols, very basic. It uses the Slow Start Phase and 
+AIMD, but it only relies on timeouts to detect losses, so no fast retransmit nor 
+fast recovery (it doesn't check for dupacks). At every loss, it always restart 
+from 1.
+
+\paragraph*{Characteristics}
 \begin{itemize}
   \item Standard TCP functions
   \item ``Slow'' start
@@ -15,7 +20,7 @@ Characteristics:
 \end{figure}
 
 \subsection{TCP Reno}
-Characteristics:
+\paragraph*{Characteristics}
 \begin{itemize}
   \item Fast Retransmit/Fast Recovery (3 dupAcks to recover one packet loss)
   \item TCP Reno can recover from one packet loss without having a time out
@@ -40,7 +45,9 @@ timeouts.
 \end{figure}
 
 \subsection{TCP SACK}
-SACK means \textit{Selective acknowledgment}.
+SACK means \textit{Selective acknowledgment}. This means that all ACKs are a
+little bigger but carry more information, they can give the sender the complete 
+picture.
 
 Returning ACKs declares which packets (even non contiguous) were received.
 All non-received packets can be retransmitted and so it recovers from multiple
