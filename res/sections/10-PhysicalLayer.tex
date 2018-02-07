@@ -141,8 +141,11 @@ nodes we can have different situations:
   just broadcasting or flooding the channel. Note that with a unidirectional
   link we can't share a file between A and B: B will be waiting for an ACK that
   never comes.
-\item Bidirectional Link: A receives B and B receives A. It can be both
-  symmetric or asymmetric.
+\item Bidirectional Link: A receives B and B receives A. It can be both:
+ \begin{itemize}
+ 	\item symmetric: all devices send at the same speed;
+ 	\item asymmetric: different speed of transmission between devices in the network.
+ \end{itemize}
 \end{itemize}
 
 \section{Examples of wireless network technology}
@@ -177,5 +180,14 @@ coverage:
 
 Note that, even in wireless connections, access points need to have both 
 the wired and wireless protocols because they don't just relay the information, 
-they have to translate it.\todo{Did he skip multiplexing?}
+they have to translate it.
+
+\section{Multiplexing}
+The goal of multiplexing is to have different channel that can share the same medium using different dimensions. These dimensions are:
+\begin{itemize}
+\item space;
+\item time: user uses one channel for a certain amount of time. This technique requires synchronization;
+\item frequency: spectrum is divided into smaller frequency bands. A certain band is given all the time to one single channel. May be a waste of bandwidth if use of channel are unbalanced;
+\item code: all channels use the same spectrum but speak a different language. Data of channels is blob together but can be decode thank to the different code assigned to channels.
+\end{itemize}
 
