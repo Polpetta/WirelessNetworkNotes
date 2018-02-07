@@ -117,7 +117,7 @@ ACK.
 On the other hand, the sender's actual window is the \textbf{Sending Window} and 
 it represents the actual bytes sent out. It corresponds to the minimum between 
 its congestion window and the receiver's advertised window
-($min(congestion window,\ advertise window)$). 
+($min(congestion\ window,\ advertise\ window)$). 
 We can think of the network channel as of a tube and our objective is to 
 keep it full at any time (otherwise we would be wasting bandwidth). By
 multiplying the bandwidth by the delay ($delay = \frac{RTT}{2}$) we get how much
@@ -201,7 +201,7 @@ single TCP segment.
 	Summarizing, the complete congestion control functionality works in 2 
 phases:
 \begin{itemize}
-  \item \textbf{Slow Start Phase}: until $cwns \le SSTHRESH$.
+  \item \textbf{Slow Start Phase}: until $cwnd \le SSTHRESH$.
 Exponential growth, at each returning ACK a new packet is transmitted 
 ($cwnd=cwnd+1$) and at every RTT $cwnd=cwnd \cdot 2$; 
   \item \textbf{Congestion Avoidance}: when $cwnd > SSTHRESH$. We 
@@ -237,11 +237,11 @@ Finally, see Figure~\ref{fig:tcp:TCPCC} and~\ref{fig:tcp:TCPSawSum} for details.
 There are two ways to detect losses: time outs and three dupacks.
 With timeout expiration:
 \begin{itemize}
-  \item $ssthresh = \frac{cwnd}{2}$
+  \item $SSTHRESH = \frac{cwnd}{2}$
   \item $cwnd = 1$ (so, restart in SS phase)
 \end{itemize}
 With three dupacks:
 \begin{itemize}
-  \item $ssthresh = \frac{cwnd}{2}$
-  \item $cwnd = \frac{cwnd}{2}$ (so, restart in cong. avoidance phase)
+  \item $SSTHRESH = \frac{cwnd}{2}$
+  \item $cwnd = \frac{cwnd}{2}$ (so, restart in congestion avoidance phase)
 \end{itemize}
