@@ -19,7 +19,17 @@ With movement, throughput degrades, because there is a possibility of link
 breakage and route failure.
 
 To solve these issues, we could adopt a different way of seeing the network:
-\textit{connection split} and \textit{pure end-to-end} connection.
+\textit{traditional TCP}, \textit{connection split} and
+\textit{pure end-to-end} connection.
+
+\paragraph*{Traditional TCP} The protocol is not aware of wireless link, and
+possible timeouts are treated like congestions. Implementations:
+\begin{itemize}
+\item TCP Reno
+\item TCP New Reno
+\item TCP Vegas
+\item TCP SACK
+\end{itemize}
 
 \paragraph*{Connection split} The network is splitted, having local
 retransmission and quick actions on the wireless link.
@@ -48,11 +58,14 @@ Considerations:
   \end{itemize}
 \end{itemize}
 
-\paragraph*{Pure end-to-end} In this protocol, the user is aware of the wireless
+\paragraph*{Pure end-to-end} In this protocol, the sender is aware of the wireless
 link. There are endless number of implementations of end-to-end protocols:
 \begin{itemize}
 \item TCP Westwood/Westwood+
-\item TCP Cubic \todo{Check if it really is a pure end-to-end protocol!}
+\item TCP Cubic
+\item TCP Hybla
+\item TCP High speed
+\item \dots
 \end{itemize}
 
 \subparagraph*{TCP Westwood} This TCP version involves changes only to the
