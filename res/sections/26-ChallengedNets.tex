@@ -4,60 +4,51 @@ Challenged networks are systems that deals with links that have
 characteristics very different from the standard ones:
 
 \begin{itemize}
-  \item satellites links $\to$ they are sensitive to meteorological conditions
-and they have a long RTT
-  \item 3G, 4G cellular systems
-  \item WiFi (802.11) WiMax (802.16)
-  \item Fiber Optic Links
-  \item car-to-car
-  \item interplanetary net
+\item satellites links $\to$ they are sensitive to meteorological conditions
+  and they have a long RTT
+\item 3G, 4G cellular systems
+\item WiFi (802.11), WiMax (802.16)
+\item fiber Optic Links
+\item car-to-car
+\item interplanetary net
 \end{itemize}
 
-Due to packet losses, dupAcks, timeouts etc \dots the link is never used
+Due to packet losses, dupAcks, timeouts etc\dots the link is never used
 to his full potential.
 
 Disruptive/intermitted links: with this kind of links there is no fixed
 infrastructure, no antenna and no cable.
 In these cases it is not possible to use the usual protocols.
-
 This leads to the following opportunities:
 \begin{itemize}
-  \item ubiquitous computing
-  \item back-up networks (after-disaster recovery, fast network deployment)
-  \item Always-on connection
-  \item Very fast connection
-  \item Traffic control
-  \item space communication
+\item ubiquitous computing
+\item back-up networks (after-disaster recovery, fast network deployment)
+\item always-on connection
+\item very fast connection
+\item traffic control
+\item space communication
 \end{itemize}
-
 \dots but with many issues:
-
 \begin{itemize}
-  \item Great increase of RTT
-  \item There is a PER (Packet Error Rate) not reducible (average: 0-10%)
-  \item Redundancy is needed
-  \item The acceleration speed is slow
+\item great increase of RTT
+\item there is a PER (Packet Error Rate) not reducible (average: 0-10\%)
+\item redundancy is needed
+\item the acceleration speed is slow
 \end{itemize}
-
 There is an interest in exploiting disruptive links (no end-to-end
-connectivity) - opportunistic communication.
+connectivity), as for example opportunistic communication.
 
 TCP is not able to distinguish between losses due to errors in links or due
-to congestion.
-
-TCP has several timers that would get crazy in case of intermitted/disruptive
-links.
-
+to congestion and it has several timers that would get crazy in case of
+intermitted/disruptive links.
 Different algorithms are used to address different problems:
-
 \begin{itemize}
-  \item large RTT
-  \item high PER
-  \item high speed
-  \item disruptive links
-  \item \dots
+\item large RTT
+\item high PER
+\item high speed
+\item disruptive links
+\item \dots
 \end{itemize}
-
 We'll analyze for every kind of link possible solutions.
 
 \subsection{Satellite communications}
@@ -70,8 +61,7 @@ One of the problems of satellite communications is the great RTT\footnote{RTT
   means \textit{Round Trip Time}}. On top of it, there is a non-negligible
 Packet Error Rate (influenced by the weather conditions and constellations
 positioning), that force the adoption of some CRC\footnote{CRC: cyclic
-redundancy check} system.
-
+  redundancy check} system.
 To solve these problems, a new protocol needs to be used, and it's TCP Hybla,
 covered in~\ref{prt:tcp:hybla}.
 
@@ -79,7 +69,7 @@ covered in~\ref{prt:tcp:hybla}.
 Terrestrial communications are:
 \begin{itemize}
 \item 3-4G
-\item WiFi (802.11) \todo{Add internal ref?}
+\item WiFi (802.11)
 \item WiMAX (802.16)
 \end{itemize}
 
@@ -118,7 +108,7 @@ the Hybla formula for $W(t)$ is:
   W(t) = \begin{cases}
     \rho^{2^{\rho \frac{t}{RTT}}} & \mbox{with } 0 \le t < t_{y,0} \mbox{ for slow start phase (SS)} \\
     \rho \cdot \left [\rho\frac{t - t_{y,0}}{RTT} + \gamma \right ] & \mbox{with } t \ge t_{y,0} \mbox{ for collision avoidance phase (CA)}
-    \end{cases}
+  \end{cases}
 \end{equation}
 
 \paragraph*{Hybla problems} Hybla has some flaws: it's a bit aggressive as
@@ -142,11 +132,11 @@ connection.
 \begin{itemize}
 \item Pro:
   \begin{itemize}
-    \item no end-to-end TCP semantics violation
+  \item no end-to-end TCP semantics violation
   \end{itemize}
 \item Cons:
   \begin{itemize}
-    \item the new bundle creates a little overhead
+  \item the new bundle creates a little overhead
   \end{itemize}
 \end{itemize}
 
@@ -160,16 +150,16 @@ connection.
 This proxy isolates the challenge link with the rest of the network, through an
 intermediate agent before it.
 \begin{itemize}
-  \item Pro:
-    \begin{itemize}
-    \item performance boost
-    \item can support every TCP enhancement
-    \end{itemize}
-  \item Cons:
-    \begin{itemize}
-    \item violation of the TCP end-to-end semantics
-    \item no IPSec support
-    \end{itemize}
+\item Pro:
+  \begin{itemize}
+  \item performance boost
+  \item can support every TCP enhancement
+  \end{itemize}
+\item Cons:
+  \begin{itemize}
+  \item violation of the TCP end-to-end semantics
+  \item no IPSec support
+  \end{itemize}
 \end{itemize}
 
 \subsubsection{TCP adaptive - Selection}
