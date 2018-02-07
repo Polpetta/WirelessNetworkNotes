@@ -232,16 +232,3 @@ Finally, see Figure~\ref{fig:tcp:TCPCC} and~\ref{fig:tcp:TCPSawSum} for details.
   \caption{TCP Saw Tooth Explained}
   \label{fig:tcp:TCPSawSum}
 \end{figure}
-
-\subsection{Loss recovery}
-There are two ways to detect losses: time outs and three dupacks.
-With timeout expiration:
-\begin{itemize}
-  \item $SSTHRESH = \frac{cwnd}{2}$
-  \item $cwnd = 1$ (so, restart in SS phase)
-\end{itemize}
-With three dupacks:
-\begin{itemize}
-  \item $SSTHRESH = \frac{cwnd}{2}$
-  \item $cwnd = \frac{cwnd}{2}$ (so, restart in congestion avoidance phase)
-\end{itemize}
