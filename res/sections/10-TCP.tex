@@ -127,7 +127,7 @@ congestion window we calculate $Bandwidth \cdot RTT$, because we also have to
 consider ACKs.
 \todo{These formulas are not clear enough, please check it out!}
 
-\subsubsection{Additive Increase/Multiplicative Decrease}
+\subsection{Additive Increase/Multiplicative Decrease}
 
 The purpose is to adjust changes in the available capacity.
 We actually have an additive increase because we increment the $cw$ by one
@@ -151,7 +151,7 @@ In practice we have:
 \label{fig:tcp:sawtooth}
 \end{figure}
 
-\subsection{Slow Start Phase SS}
+\subsubsection{Slow Start Phase SS}
 
 \textbf{Purpose}: quickly determine the available capacity.
 
@@ -197,9 +197,8 @@ single TCP segment.
   \label{fig:tcp:TCPBeh}
 \end{figure}
 
-\subsubsection{Summary}	
-	Summarizing, the complete congestion control functionality works in 2 
-phases:
+\paragraph*{Summary}
+Summarizing, the complete congestion control functionality works in 2 phases:
 \begin{itemize}
   \item \textbf{Slow Start Phase}: until $cwnd \le SSTHRESH$.
 Exponential growth, at each returning ACK a new packet is transmitted 
