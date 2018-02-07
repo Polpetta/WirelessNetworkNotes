@@ -73,7 +73,7 @@ Terrestrial communications are:
 \item WiMAX (802.16)
 \end{itemize}
 
-\paragraph*{Characteristics} There are some characteristic in terrestrial
+\paragraph*{Characteristics} There are some characteristics in terrestrial
 communications: first of all, there is a variable RTT, and, as for satellite
 communications there is a non-negligible packet error rate. Finally, there are
 performances issues for cabled links (e.g. fiber communications), because
@@ -81,8 +81,8 @@ internet protocols aren't able to exploit high-speed networks.
 
 \subsection{TCP solutions}
 
-As we can understand, traditional TCP protocols don't work very well with these
-links. High-speed networks requires very high volumes of W\footnote{congestion
+As we can see, traditional TCP protocols don't work very well with these links.
+High-speed networks requires very high volumes of W\footnote{congestion
 window}: $B(t) = \frac{W(t)}{RTT}$, and too little retransmission timers lead
 to frequent retransmissions.
 Thus, new TCP protocols were made.
@@ -90,13 +90,13 @@ Thus, new TCP protocols were made.
 \subsubsection{TCP Hybla}
 \label{prt:tcp:hybla}
 
-This protocol equalize the transmission rate against the RTT, and it's good for
+This protocol equalizes the transmission rate against the RTT, and it's good for
 satellite links.
 
-TCP Hybla adopt the following solution: it sets a new parameter, $\rho$,
+TCP Hybla adopts the following solution: it sets a new parameter, $\rho$,
 setting it to $\rho = \frac{RTT}{RTT_0}$, where $RTT_0$ is a reference RTT
 (usually equals to 25ms).
-Differently to ``classic'' TCP formula for $W(t)$ that is:
+Differently to the ``classic'' TCP formula for $W(t)$ that is:
 \begin{equation*}
   W(t) = \begin{cases}
     \frac{t}{2 \cdot RTT}, & \mbox{with } 0 \le t < t_y \mbox{ for slow start phase (SS)} \\
@@ -112,7 +112,7 @@ the Hybla formula for $W(t)$ is:
 \end{equation}
 
 \paragraph*{Hybla problems} Hybla has some flaws: it's a bit aggressive as
-protocol, but its ok cause it'd be too slow otherwise. Keep in mind that being
+protocol, but it's ok cause it'd be too slow otherwise. Keep in mind that being
 aggressive means that you risk to lose many packets all together. In this case,
 aggressiveness could cause friendliness problems too, such as disruption of
 other protocols.
@@ -140,9 +140,9 @@ connection.
   \end{itemize}
 \end{itemize}
 
-\begin{figure}[H]
+\begin{figure}[t]
   \centering
-  \includegraphics[scale=0.45]{DTNStack}
+  \includegraphics[scale=0.40]{DTNStack}
   \caption{DTN Stack}
 \end{figure}
 
@@ -162,7 +162,7 @@ intermediate agent before it.
   \end{itemize}
 \end{itemize}
 
-\subsubsection{TCP adaptive - Selection}
+\subsubsection{TCP adaptive - selection}
 Proposed from the DTN group, the right TCP protocol is selected based on the
 connection. This selection is performed using the following characteristics:
 \begin{itemize}
