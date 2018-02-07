@@ -4,6 +4,7 @@ WiFi
 WiMax
 dupAcks
 TCP
+<<<<<<< HEAD
 TDMA
 FDMA
 CDMA
@@ -201,3 +202,13 @@ RTTs
 WestWood
 Hybla
 BWE
+intermitted
+CRC
+Hybla
+WiMAX
+retransmission
+retransmissions
+ok
+cwnd
+DTN
+IPSec
