@@ -124,8 +124,7 @@ multiplying the bandwidth by the delay ($delay = \frac{RTT}{2}$) we get how much
 data we can have in a connection without clogging it. Incidentally, this is also
 the max size of the congestion window. When using TCP, to get the size of the
 congestion window we calculate $Bandwidth \cdot RTT$, because we also have to
-consider ACKs.
-\todo{These formulas are not clear enough, please check it out!}
+consider ACKs, which are very small and can be ignored.
 
 \subsection{Additive Increase/Multiplicative Decrease}
 
