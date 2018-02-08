@@ -1,4 +1,3 @@
-\newpage
 \section{TCP and Wireless}
 
 Wireless is less reliable than cable, and losses are common. In TCP though,
@@ -23,7 +22,7 @@ To solve these issues, we could adopt a different way of seeing the network:
 \textit{traditional TCP}, \textit{connection split} and
 \textit{pure end-to-end} connection.
 
-\paragraph*{Traditional TCP} The protocol is not aware of wireless link, and
+\subsection{Traditional TCP} The protocol is not aware of wireless link, and
 possible timeouts are treated like congestions. Implementations:
 \begin{itemize}
 \item TCP Reno
@@ -32,7 +31,7 @@ possible timeouts are treated like congestions. Implementations:
 \item TCP SACK
 \end{itemize}
 
-\paragraph*{Connection split} The network is split, having local
+\subsection{Connection split} The network is split, having local
 retransmission and quick actions on the wireless link.
 Examples:
 \begin{itemize}
@@ -42,7 +41,7 @@ Examples:
 \item Snoop Protocol
 \end{itemize}
 
-\subparagraph*{Snoop Protocol} In this protocol, there is a tower with a big
+\subsubsection{Snoop Protocol} In this protocol, there is a tower with a big
 buffer keeping a list of ACKs: it handles dupAcks/lost packages, without
 stopping the sender from sending new data to the tower.
 Considerations:
@@ -59,7 +58,7 @@ Considerations:
   \end{itemize}
 \end{itemize}
 
-\paragraph*{Pure end-to-end} In this protocol, the sender is aware of the wireless
+\subsection{Pure end-to-end} In this protocol, the sender is aware of the wireless
 link. There are endless number of implementations of end-to-end protocols:
 \begin{itemize}
 \item TCP WestWood/WestWood+
@@ -69,15 +68,15 @@ link. There are endless number of implementations of end-to-end protocols:
 \item \dots
 \end{itemize}
 
-\subparagraph*{TCP WestWood} This TCP version involves changes only to the
+\subsubsection{TCP WestWood} This TCP version involves changes only to the
 server side of the connection, and not to everyone. It's useful for satellite
 communications.
 The SSTHRESH is calculated in this way with three dupAcks:
 \begin{equation}
-SSTHRESH = BWE * RTT_{min}
+SSTHRESH = BWE \cdot RTT_{min}
 \end{equation}
 If the cwnd is greater than the SSTHRESH instead we have that $cwnd=SSTHRESH$
-Otherwise, if a timeout occurs we have $SSTHRESH = BWE * RTT_{min}$ but the
+Otherwise, if a timeout occurs we have $SSTHRESH = BWE \cdot RTT_{min}$ but the
 cwnd becomes equals to 1.
 
 Flow control is based on an estimation of the eligible bandwidth (BWE). TCP
