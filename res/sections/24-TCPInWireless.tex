@@ -69,39 +69,59 @@ link. There are endless number of implementations of end-to-end protocols:
 \end{itemize}
 
 \subsubsection{TCP WestWood} This TCP version involves changes only to the
-server side of the connection, and not to everyone. It's useful for satellite
+sender side of the connection, and not to everyone. It's useful for satellite
 communications.
-The SSTHRESH is calculated in this way with three dupAcks:
-\begin{equation}
-SSTHRESH = BWE \cdot RTT_{min}
-\end{equation}
-If the cwnd is greater than the SSTHRESH instead we have that $cwnd=SSTHRESH$
-Otherwise, if a timeout occurs we have $SSTHRESH = BWE \cdot RTT_{min}$ but the
-cwnd becomes equals to 1.
-
+ 
 Flow control is based on an estimation of the eligible bandwidth (BWE). TCP
 WestWood can perform an estimation determined from ACK internal-arrival times
-and info in ACKs regarding amounts of bytes delivered. The \textit{rate
-  estimation} is based on three formulas.
+and info in ACKs regarding amounts of bytes delivered.
+The \mKeyword{rate estimation} enhance congestion control, and is used by the
+sender to properly set $cwnd$ and $SSTHRESH$ after a packet loss (either a
+three dupAcks or a timeout). Rate estimation is based on three formulas.
 \begin{equation}
   RE_k = a_k \cdot RE_{k-1} + (1 - a_k) \cdot \left( \frac{b_k + b_{k-1}}{2}
-\right)
+  \right)
+  \label{eq:tcpw:ef}
 \end{equation}
 
 This formula calculate the filter. In particular, this formula is quick to
-compute, and allows to set proportions like: 75\% $RE_{k-1}$ and 25\% of
-samples. Obviously, it takes some time to have a good estimation of the
-bandwidth.
+compute, and allows to set proportions like: 75\% $RE_{k-1}$ (the portion of the
+previous volume) and 25\% of samples. Obviously, it takes some time to have a
+good estimation of the bandwidth.
 To calculate the samples, the formula is:
 \begin{equation}
-b_k = \frac{ \sum_{t_j > t_k-T} d_j }{T} = \frac{ACK\ seen}{Time\ Passed}
+b_k = \frac{\sum_{t_j > t_k-T} d_j }{T} = \frac{ACK\ seen}{Time\ Passed}
 \end{equation}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[scale=0.3]{TCPWRE}
+  \caption[Graphical $b_k$ representation]{Representative schema of how $b_k$ is
+    calculated}
+  \label{fig:tcpw:TCPWRE}
+\end{figure}
+
+Note that this formula is based on $T$ (indicating typically the RTT): on one
+hand having a small $T$ it means being more aggressive at the rate estimation,
+on the other hand having a big $T$ it means being more conservative.
+
 
 At the end, the filter is calculated another time:
 \begin{equation}
 a_k = \frac{2t - \Delta t_k}{2t + \Delta t_k}
 \end{equation}
-This formula is difficult to compute, and it requires some time.
+it's important to consider that his formula is difficult to compute and slows
+down the whole formula,~\ref{eq:tcpw:ef}.
+
+With the way~\ref{eq:tcpw:ef} is calculated, the value is fine-tuned over time.
+
+\paragraph*{Handling losses in TCP WestWood} When three dupAcks occurs
+we have that $SSTHRESH = BWE \cdot RTT_{min}$ and if the cwnd is greater than
+the SSTHRESH we set $cwnd=SSTHRESH$.
+Otherwise if a timeout occurs we have $SSTHRESH = BWE \cdot RTT_{min}$ but the
+cwnd becomes equals to 1.
+
+\paragraph*{Final considerations}
 \begin{itemize}
 \item Pro:
   \begin{itemize}
@@ -121,9 +141,9 @@ This formula is difficult to compute, and it requires some time.
   \end{itemize}
 \end{itemize}
 
-\begin{figure}[h]
+\begin{figure}[t]
 \centering
-\includegraphics[scale=0.35]{TCPWestWood}
+\includegraphics[scale=0.30]{TCPWestWood}
 \caption[TCP WestWood vs TCP Reno]{A comparison between TCP WestWood and TCP Reno}
 \label{fig:tcpw:tcpwwvstcpr}
 \end{figure}
