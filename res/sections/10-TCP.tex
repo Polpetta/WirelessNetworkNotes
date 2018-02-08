@@ -140,7 +140,8 @@ In practice we have:
 \begin{itemize}
   \item increment = $\frac{1}{cwnd}$
   \item cwnd += increment
-  \item cwnd = $\frac{cwnd}{2}$ if a timeout occurs
+  \item if a timeout or a three dupAcks happens the $cwnd$ is a value based on
+    the TCP version
 \end{itemize}
 
 \begin{figure}[t]
