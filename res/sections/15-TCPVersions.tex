@@ -55,3 +55,21 @@ losses in just one RTT.
   \includegraphics[scale=0.8]{sack}
   \caption[TCP SACK]{TCP SACK - Recovery from multiple losses in just one RTT}
 \end{figure}
+
+\subsubsection{Differences between TCP New Reno and TCP SACK}
+
+TCP New Reno works by assuming that the packet that immediately follows the partial ACK received at fast recovery is lost, and retransmit
+the packet. However, this might not be true and it affects the performance of TCP. SACK TCP adds a number of SACK blocks in TCP packet,
+where each SACK block acknowledges a non-contiguous set of data has been received. The main difference between SACK TCP and Reno TCP
+implementations is in the behavior when multiple packets are dropped from one window of data. SACK sender maintains the information which
+packets is missed at receiver and only retransmits these packets. When all the outstanding packets at the start of fast recovery are
+acknowledged, SACK exits fast recovery and enters congestion avoidance.\footnote{
+  \url{http://www.roman10.net/2011/11/10/tcp-tahoe-reno-newreno-and-sacka-brief-comparison/}
+}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[scale=0.33]{TCPFlowSackNoSack}
+  \caption[TCP No SACK vs TCP SACK]{A comparison between TCP SACK versus one without SACK}
+  \label{fig:tcp:sackvsnosack}
+\end{figure}
