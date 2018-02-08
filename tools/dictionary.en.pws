@@ -212,3 +212,5 @@ cwnd
 DTN
 IPSec
 retransmits
+pkts
+goodput
