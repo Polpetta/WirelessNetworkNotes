@@ -16,7 +16,7 @@ which includes both flow and congestion control.
 
 TCP has the following characteristics:
 \begin{itemize}
-\item it's an end-to-end protocol (software only on the end hosts)
+\item it's an \mKeyword{end-to-end} protocol (software only on the end hosts)
 \item it establishes a connection\dots
   \begin{itemize}
   \item reliable. A checksum is used to detect bit level errors and sequence
@@ -25,7 +25,7 @@ TCP has the following characteristics:
   \item correct
   \item ordered (thanks to sequencing numbers)
   \end{itemize}
-\item full duplex
+\item \mKeyword{full duplex}
 \item it is not so appropriate for current wireless scenarios (but there are
   many variants of TCP)
 \item byte-stream oriented. TCP sends segments (packets) through a 
@@ -34,15 +34,15 @@ TCP has the following characteristics:
 \item has congestion control: it keeps the sender for overrunning the network
 \end{itemize}
 
-TCP does 2 types of control, the \textbf{flow control} in order to avoid
-overwhelming the receiver and the \textbf{congestion control} where the flow
-slows down when there is a loss of packets.
+TCP does 2 types of control, the \mKeyword{\textbf{flow control}} in order to
+avoid overwhelming the receiver and the \mKeyword{\textbf{congestion control}}
+where the flow slows down when there is a loss of packets.
 
 \section{Reliability in TCP}
 Timeouts are used to detect lost packets: this 
-requires setting an RTO (\textit{Retransmission Timeout}). If the ACK is lost,
-after waiting the RTO, we retransmit that packet. There are obviously some
-issues: how much should the RTO be? Are we sure that, in wireless networks,
+requires setting an \mKeyword{RTO} (\textit{Retransmission Timeout}). If the ACK
+is lost, after waiting the RTO, we retransmit that packet. There are obviously
+some issues: how much should the RTO be? Are we sure that, in wireless networks,
 a missing ACK equals a missing packet?
 As for the optimal setting of the RTO, we usually want to wait at least 
 one RTT (\textit{Round Trip Time}) before retransmitting. This values have to be
@@ -69,7 +69,7 @@ state the number of the last packet received, instead it returns the number of
 the last packet of the longest complete sequence received.
 For example: if A sends packets 1-6 without errors, it receives ACK(6). 
 Then 7 goes missing and 8 is received. The ACK will be ACK (6). So, we have a 
-duplicate ACK (dupack).
+duplicate ACK (\mKeyword{dupack}).
 Duplicate ACKs occur in case of packet loss, packet re-ordering or 
 window update. Generally, we can assume that the receipt of 3 or more dupacks 
 indicates a packet loss and so we don't need to wait for the timeout to 
@@ -84,7 +84,7 @@ control window update.
 
 TCP normally increases the number of 
 packets sent by 1 every RTT and, every time a packet is lost, it restarts form
-1. In Fast Recovery, instead of going back to 1, we start at SSTHRESH
+1. In Fast Recovery, instead of going back to 1, we start at \mKeyword{SSTHRESH}
 (\textit{Slow start threshold}), a threshold usually put at about $\frac{1}{2}$
 of where we were. Note that even using Fast Recovery we don't have an optimal
 situation for wireless networks, having lost a packet due to network errors
@@ -92,13 +92,13 @@ doesn't mean I have bandwidth problems and so it doesn't make any sense to slow
 down restarting from $\frac{1}{2}$, we should just resend the packet.
 
 \subsection{Congestion Window}
-A Congestion Window ($cw$) is used to keep the sender for overrunning the
-network sending too many packets. A $cw$ sets the number of packets without ACK
-that can be currently traveling in the network. The window starts small and,
-every time a whole window has been received (ACKs have been sent back), the
-window increases by 1. Otherwise, if some packets are lost, the window either
-return to 1 or goes back to the slow start threshold (depending on the TCP
-version in use).
+A \mKeyword{Congestion Window} ($cw$) is used to keep the sender for
+overrunning the network sending too many packets. A $cw$ sets the number of
+packets without ACK that can be currently traveling in the network. The window
+starts small and, every time a whole window has been received (ACKs have been
+sent back), the window increases by 1. Otherwise, if some packets are lost, the
+window either return to 1 or goes back to the slow start threshold (depending on
+the TCP version in use).
 \begin{figure}[h]
   \centering
   \includegraphics[scale=0.4]{CongestionWindow}
