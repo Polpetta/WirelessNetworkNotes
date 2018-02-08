@@ -201,10 +201,11 @@ single TCP segment.
 Summarizing, the complete congestion control functionality works in 2 phases:
 \begin{itemize}
   \item \textbf{Slow Start Phase}: until $cwnd \le SSTHRESH$.
-Exponential growth, at each returning ACK a new packet is transmitted 
-($cwnd=cwnd+1$) and at every RTT $cwnd=cwnd \cdot 2$; 
+    Exponential growth, at each returning ACK a new packet is transmitted
+    ($cwnd = cwnd+1$) having, when every packet has received its ACK, a
+    $cwnd = 2 \cdot cwnd$;
   \item \textbf{Congestion Avoidance}: when $cwnd > SSTHRESH$. We 
-switch to linear growth, at each returning ACK a new packet is transmitted 
+switch to linear growth, at each returning ACK a new packet is transmitted
 ($cwnd=\frac{cwnd+1}{cwnd}$) and at every RTT $cwnd=cwnd+1$.
 \end{itemize}
 	
