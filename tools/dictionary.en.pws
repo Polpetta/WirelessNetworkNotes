@@ -4,7 +4,6 @@ WiFi
 WiMax
 dupAcks
 TCP
-<<<<<<< HEAD
 TDMA
 FDMA
 CDMA
@@ -202,6 +201,7 @@ RTTs
 WestWood
 Hybla
 BWE
+<<<<<<< HEAD
 intermitted
 CRC
 Hybla
@@ -212,3 +212,4 @@ ok
 cwnd
 DTN
 IPSec
+retransmits
