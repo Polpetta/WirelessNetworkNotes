@@ -138,8 +138,8 @@ cwnd grows linearly in time and that TCP sends a cwnd's worth of bytes each RTT.
 
 In practice we have:
 \begin{itemize}
-  \item increment = $\frac{1}{cwnd}$
-  \item cwnd += increment
+  \item $increment = \frac{1}{cwnd}$
+  \item $cwnd += increment$
   \item if a timeout or a three dupAcks happens the $cwnd$ is a value based on
     the TCP version
 \end{itemize}
@@ -159,14 +159,14 @@ In practice we have:
 starting connection or when connection goes dead waiting for timeout.
 
 \begin{itemize}
-\item begin with cwnd = 1 packet
-\item \textbf{double (*2)} cwnd for each RTT (increment by 1 packet for each
-  ACK)
-\item This is exponential increase to check for available bandwidth (up to half
-  of cwnd may get lost)
+\item begin with $cwnd = 1$ packet
+\item $increment = 1$  (increment by 1 packet for each ACK)
+\item $cwnd += increment$
 \end{itemize}
 
-Keep in mind that this phase is not ``slow'', it is exponential.
+This exponential increase is to check for available bandwidth (up to half of
+cwnd may get lost). ``Slow'' in this context means that the initial start,
+without this method, would be slow.
 \textbf{SSTHRESH} (slow start threshold) indicates when to begin additive
 increase phase and it's set to one half of $cwnd$ when a packet loss happens.
 So, SSTHRESH goes through multiplicative decrease for each packet loss (because
