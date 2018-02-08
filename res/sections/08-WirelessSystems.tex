@@ -29,13 +29,13 @@ access point, connected to the Internet through a wire and using protocol
 802.11. The access point not only forwards data, it also coordinates users and 
 breaks data into packets. In fact, even though data arrives already broken, 
 access points break it further, because the smaller the packet transmitted, the 
-better. Obviously, this becomes a problem when we relate it to overhead: since 
-overhead has a fixed size, independent from the packet's size, we may find 
-ourselves in the situation where, faced with $1000\ data + 40\ overhead$ we end
-up with $500\ data + 40\ overhead$ plus $500\ data + 40\ overhead$.
-We still prefer splitting, because, when facing a big error rate we 
-don't want to lose all the packets.
-The WLAN channel access is shared using random access and this system 
+better. Obviously, this becomes a problem when we relate it to
+\mKeyword{overhead}: since overhead has a fixed size, independent from the
+packet's size, we may find ourselves in the situation where, faced with
+$1000\ data + 40\ overhead$ we end up with $500\ data + 40\ overhead$ plus
+$500\ data + 40\ overhead$. We still prefer \mKeyword{splitting} because, when
+facing a big error rate, we don't want to lose all the packets.
+The WLAN channel access is shared using \mKeyword{random access} and this system
 forms the backbone of current Internet, providing a best-effort service.
 
 \begin{figure}[t]
@@ -77,7 +77,7 @@ They are used to cover very large areas. There exist two types of
 satellites that have different orbit heights: GEO satellites (GEOstationary) 
 stay at about 39000 km while LEO satellites (Low Earth Orbit) stay lower, at 
 2000 km. GEO are so high that remain stationary and can cover the whole surface 
-while LEO revolve continuously in order not to fall.
+while LEO revolve continuously in order to not fall.
 Satellites are usually a two way system, optimize for one-way 
 transmission: usually satellite $\to$ earth is faster than the other way.
 
