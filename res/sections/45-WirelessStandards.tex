@@ -81,7 +81,8 @@ window doesn't provide QoS.
 
 \subsection{EDCA}
 
-EDCA is a supported QoS mechanism in 802.11e. It has four access categories:
+EDCA is a supported QoS mechanism in 802.11e. It has four
+\mKeyword{access categories}:
 \begin{enumerate}
 \item AC\_V0 (for voice) $\to$ when you want to be fast but you leave the
   channel soon. it's privileged to the others, especially during congestion.
@@ -94,7 +95,8 @@ EDCA is a supported QoS mechanism in 802.11e. It has four access categories:
 \end{enumerate}
 
 EDCA has 8 traffic classes (TC) too.
-Each AC starts a back off after detecting the channel being idle for AIFS, and
+Each AC starts a back off after detecting the channel being idle for
+AIFS\footnote{AIFS means \textit{Arbitration Inter Frame Space}}, and
 after waiting for it, each back off sets counters choosing between $1$ and
 $cw + 1$. The back off formula is:
 \begin{equation}
@@ -111,7 +113,7 @@ contention windows, and with multiple streams I lose some overall bandwidth.
 offers prioritized channel, based on the QoS parameters per traffic classes,
 which includes:
 \begin{itemize}
-\item AIFS[AC]\footnote{AIFS means \textit{Arbitration Inter-frame space}}
+\item AIFS[AC]
 \item CWmin[AC]
 \item PF[AC]\footnote{PF means \textit{Persistence Factor}}
 \end{itemize}
