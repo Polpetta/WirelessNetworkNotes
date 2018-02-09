@@ -1,7 +1,7 @@
 \chapter{Routing}
 
-Routing determine the ``good''\footnote{The minimum path typically} path (
-sequence of routers) thru network from source to destination.
+Routing determine the ``good''\footnote{The minimum path typically} path
+(sequence of routers) thru network from source to destination.
 Routing protocols use graphs as a mathematical abstraction.
 
 \section{Typologies of routing}
@@ -57,7 +57,8 @@ There are different types of routing based on different types of networks.
 \paragraph*{Infrastructure based} In this case routing is relatively simple.
 There is just a single hop from the access point (AP) to the wireless node.
 
-\paragraph*{MANET} It's also know as ad-hoc, and has the following
+\paragraph*{MANET}\footnote{MANET stands for \textit{Metropolitan Area
+    Network}} It's also know as ad-hoc, and has the following
 characteristics:
 \begin{itemize}
 \item the \textbf{network constantly changes},
@@ -69,12 +70,11 @@ and \textbf{limited bandwidth} (due to exchange of routing information)
 on mobile systems.
 
 In wireline networks we have symmetric links, limited redundancy and fixed
-topology, instead in wireless has asymmetric links, random redundancy with
+topology, instead wireless has asymmetric links and random redundancy with
 unplanned, dynamic links. With all these peculiarities, traditional routing
-algorithms for MANETS\footnote{MANET stands for \textit{Metropolitan Area
-    Network}} are inefficient, and the new one must rely on data link
+algorithms for MANETS are inefficient, and the new one must rely on data link
 information, not just network layer updates\footnote{Layer updates only
-  determine connectivity}, without using in centralized approaches because they
+  determine connectivity}, without using centralized approaches because they
 just don't work. In MANETS nodes can be routers, and they can send different
 type of messages between them.
 \subparagraph*{Messages classification} There are different type of messages:
@@ -266,7 +266,7 @@ differences:
 metric, in combination with a DSR-like routing. RREQ is forwarded only if the
 packet is received over a link with good signal strength.
 
-\paragraph*{Geographic routing protocols} This protocols use location. In
+\paragraph*{Geographic routing protocols} These protocols use location. In
 particular, GPSR (greedy perimeter stateless routing) has the following
 properties:
 \begin{itemize}
@@ -284,7 +284,7 @@ Defines metric with a ``degree of association stability'' (with how many
 frequency do I move from my neighbours?). Nodes with less mobility or better
 links have higher stability volume.
 
-\paragraph*{Expected Transmission Time (ETT)} This metric is easier to computer
+\paragraph*{Expected Transmission Time (ETT)} This metric is easier to compute
 than the signal strength, and it can be more useful.
 
 \paragraph*{Weighted cumulative expected transmission time} This metric is
