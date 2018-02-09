@@ -70,8 +70,8 @@ This version of Aloha has time divided slots: every transmission has to stay in
 a defined time slot, that is not easy to do but it's possible. In case of a
 collision, a re-transmission occurs with a probability $P$.
 
-\paragraph*{Throughput} The throughput of this Aloha version with synchronization
-is $\frac{1}{e}$
+\paragraph*{Throughput} The throughput of this Aloha version with
+synchronization is $\frac{1}{e}$
 
 \subsubsection{Considerations about Aloha protocols}
 
@@ -187,9 +187,10 @@ operating principle of 802.11, and it's widely used in ad-hoc networks.
 MACAW helps solving the hidden terminal problem, but not the exposed terminal
 problem.
 
-\paragraph*{How it works} 
+\paragraph*{Channel access method}
 MACAW uses CTS and RTS packets to knowing if the channel is free to be used to
-transmit new data.
+transmit new data. These two types of packets are very small, so it's difficult
+to have a collision trasmitting them.
 
 \subparagraph*{RTS} \textit{Request to Send} is a frame sent by the
 sender to the receiver before starting a transmission that asks if there are no
@@ -203,8 +204,50 @@ a new transmission.
   \centering
   \includegraphics[scale=0.75]{MACAW}
   \caption{A schema describing an example of how MACAW works}
+  \label{fig:mac:macaw}
 \end{figure}
 
+\subparagraph*{How it works} From Figure~\ref{fig:mac:macaw}, assume that node A
+has data to transfer to node B.
+Node A initiates the process by sending a Request to Send frame (RTS) to node B.
+The destination node (node B) replies with a Clear To Send frame (CTS). After
+receiving CTS, node A sends data. After successful reception, node B replies
+with an acknowledgement frame (ACK). If node A has to send more than one data
+fragment, it has to wait a random time after each successful data transfer and
+compete with adjacent nodes for the medium using the RTS/CTS mechanism.
+
+Any node overhearing an RTS frame (for example node F or node E in the
+illustration) refrains from sending anything until a CTS is received, or after
+waiting a certain time. If the captured RTS is not followed by a CTS, the
+maximum waiting time is the RTS propagation time and the destination node
+turnaround time.
+
+Any node (node C and node E) overhearing a CTS frame refrains from sending
+anything for the time until the data frame and ACK should have been received
+(solving the hidden terminal problem), plus a random time. Both the RTS and CTS
+frames contain information about the length of the DATA frame. Hence a node uses
+ that information to estimate the time for the data transmission completion.
+
+Before sending a long DATA frame, node A sends a short Data-Sending frame (DS),
+which provides information about the length of the DATA frame. Every station
+that overhears this frame knows that the RTS/CTS exchange was successful. An
+overhearing station (node F), which might have received RTS and DS but not CTS,
+defers its transmissions until after the ACK frame should have been received
+plus a random time.
+
+To sum up, a successful data transfer (A to B) consists of the following
+sequence of frames:
+\begin{enumerate}
+\item ``Request To Send'' frame (RTS) from A to B
+\item ``Clear To Send'' frame (CTS) from B to A
+\item ``Clear To Send'' frame (CTS) from B to A
+\item ``Data Sending'' frame (DS) from A to B
+\item DATA fragment frame from A to B, and
+\item Acknowledgement frame (ACK) from B to A.\footnote{
+Taken from
+\url{https://en.wikipedia.org/wiki/Multiple_Access_with_Collision_Avoidance_for_Wireless}
+}
+\end{enumerate}
 
 \subparagraph*{Contention window} MACAW uses contention windows (\textit{cw}) to
 determine the packet transmission rate. When a node fails to receive CTS in
