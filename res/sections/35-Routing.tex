@@ -195,7 +195,6 @@ kept until a timeout happens.
 
 \paragraph*{How a package is sent} AODV use the following procedure to send a
 packet:
-\begin{multicols}{2}
 \begin{enumerate}
 \item check routing table to determine if the current route to destination is
   present. If so, forward the packet to the next hop, otherwise, go to step 2.
@@ -220,7 +219,6 @@ packet:
   RREQ will be able to reach the destination. Intermediate nodes can send an
   RREQ if they know a more recent path of the one previously known to senders.
 \end{enumerate}
-\end{multicols}
 
 \paragraph*{Broadcast} The broadcast is performed by flooding the network, and
 a sequence number on the packets is used to stop loops from happening, meaning
@@ -275,7 +273,8 @@ properties:
 \item location of the destination node is assumed to be known
 \item each node knows location of its neighbours $\to$ packets are forwarded to
   the closest one
-\item if there is a ``hole'' in the graph, use perimeter routing (right-hand rule) \todo{Maybe this role could be explained a little bit.}
+\item if there is a ``hole'' in the graph, use perimeter routing (right-hand
+rule) \todo{Maybe this role could be explained a little bit.}
 \end{itemize}
 
 \subsection{Metrics}
