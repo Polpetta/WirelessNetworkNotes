@@ -8,14 +8,14 @@ in the table~\ref{tab:802.11ws:list}
 \resizebox{\textwidth}{!}{%
 \begin{tabular}{|l|p{10cm}|}
 \hline
-\textbf{802.11 Typology} & \textbf{Description}                                                     \\ \hline
-802.11a                  & 54Mb/s, 5GHz. Launched in 2001, took more to develop than "b"            \\ \hline
-802.11b                  & 5.5/11Mb/s. Launched in 1999, it was the first 802.11 protocol ever made \\ \hline
-802.11e                  & It brings QoS (Quality of Service) extension                             \\ \hline
-802.11g                  & 54Mb/s, 2.4GHz, compatible with "b"                                      \\ \hline
-802.11n                  & High throughput technology - introduces MIMO                             \\ \hline
-802.11p                  & It brings communication between vehicles but also for payments           \\ \hline
-802.11s                  & It brings extension for mesh networks                                    \\ \hline
+\textbf{802.11 Typology} & \textbf{Description}                                                      \\ \hline
+802.11a                  & 54Mb/s, 5GHz. Launched in 2001, took more to develop than ``b''           \\ \hline
+802.11b                  & 5.5/11Mb/s. Launched in 1999, it was the first 802.11 protocol ever made  \\ \hline
+802.11e                  & It brings QoS (Quality of Service) extension                              \\ \hline
+802.11g                  & 54Mb/s, 2.4GHz, compatible with "b"                                       \\ \hline
+802.11n                  & High throughput technology - introduces MIMO                              \\ \hline
+802.11p                  & It brings communication between vehicles but also for payments            \\ \hline
+802.11s                  & It brings extension for mesh networks                                     \\ \hline
 \end{tabular}%
 }
 \caption{List of most important 802.11 wireless standards}
@@ -127,9 +127,10 @@ Using EDCA has the following advantages:
 \end{itemize}
 but has the following disadvantages:
 \begin{itemize}
-\item Streams of the same priority compete: making difficult for ECDA to be able
-  to guarantee a good access, latency, bandwidth or jitter to every connection.
-A solution to this problem is using \textbf{admission control}.
+\item Streams of the same priority competes: making difficult for ECDA to be
+able to guarantee a good access, latency, bandwidth or jitter to every
+connection. A solution to this problem is using
+\mKeyword{\textbf{admission control}}.
 \end{itemize}
 
 \paragraph*{Admission Control} This solution allows only a limited number of
@@ -137,10 +138,10 @@ peers to access the network, limiting (but not eliminating) the stream
 contention and reducing the latency of QoS streams.
 In this way the best-effort approach is no more necessary.
 \subparagraph*{How Admission Control works} The AP advertises ACM\footnote{This
-is a bit that says if the AP supports Admission Control.} in beacon to indicate
-if admission control is mandatory for any Access Category. In this way, to use
-and AC that  sends AddTS (\textit{Add Traffic Specification}) Request Action
-Frame to AP that includes a TSPEC.
+is a bit that says if the AP supports Admission Control.} in the beacon to
+indicate if admission control is mandatory for any Access Category. In this way,
+to use an AC that  sends AddTS (\textit{Add Traffic Specification}) Request
+Action Frame to AP that includes a TSPEC.
 When a new node wants to connect with the AP, the AP runs the admission control
 algorithm and replies with an AddTS Response Action Frame.
 
@@ -188,9 +189,9 @@ SISO has this additional disadvantages though:
 
 \section{802.11p}
 
-This protocols is designed to provide connectivity to vehicles. Since it's
+This protocol is designed to provide connectivity to vehicles. Since it's
 still under heavy development it's not freely available at the moment.
-Governments have reserved particular channel, 5.9GHz in USA and EU. 802.11p
+Governments have reserved in USA and EU a particular channel, 5.9GHz. 802.11p
 allows up to 300m communication range with 6Mbps. Transfers are possible
 even at 200km/h.
 
@@ -205,7 +206,8 @@ Vehicle\footnote{AV is a vehicle that its behavior is not conform to some
 threshold}\todo{This footnote needs a rewrite} to the following vehicles, via
 broadcast. This messages are faster than the normal human reaction, and can
 prevent chained car accidents. How much time does it take to the following
-vehicles to receive the message to break? The latency it's an important aspect.
+vehicles to receive the message to start breaking? The latency it's an important
+aspect.
 Broadcasting messages could lead to an explosion when we have multi-hop path.
 To solve this, different solutions have been proposed.
 First of all, all the cars needs to have locations, so they can include details
@@ -232,7 +234,7 @@ The car movement needs to be kept in consideration: cars can move very fast,
 causing variable transmission range. On top of that, a car cannot be sure to
 be the farthest car receiving that broadcast message, as explained in
 Figure~\ref{fig:802.11ws:broadcast}. So who has to forward the alert message?
-It's important to pick up the right vehicle that has to propagate the message.
+It's important to pick up the right vehicle that has to propagate it.
 If the message has already been rebroadcast by a following vehicle do not
 forward it, because it could be redundant. A way to reduce the message
 retransmission is to use a sort of back-off mechanism, or otherwise set vehicles
@@ -254,14 +256,14 @@ issues:
 \item only the one in the MCDS can propagate the message, making the solution
   optimal, but not feasible: I would need a central station then knows all the
   other nodes position
-\item this solution is not considering the number of hop of a message has to
+\item this solution is not considering the number of hop a message has to
   traverse
 \end{itemize}
 
 \subsubsection{Urban multi-hop broadcasting protocols} This broadcasting
 protocols uses \textbf{jamming} signals to determine the next forwarder:
 vehicles receiving an alert message emit a jamming signal for a time that's
-proportional to the distance from the sender. The last one stops the hamming
+proportional to the distance from the sender. The last one stops the jamming
 signal and forward the message.
 
 The problem of this solution is that is slow, and for this is not suitable for
@@ -326,7 +328,7 @@ contention window during this procedure is calculated in this way:
 
 \paragraph*{Comparing Fast Broadcast}
 Let's compare Fast Broadcast with Static 300 and Static 100. Static 300 has a
-lot of collision for 1 km of transmission range, determining Fast Broadcast as
+lot of collisions for 1 km of transmission range, determining Fast Broadcast as
 the best solution. Static 100 performance are in general very poor.
 
 \begin{figure}[t]
@@ -342,5 +344,5 @@ the best solution. Static 100 performance are in general very poor.
 
 These results are due the fixed nature of the contention window of Static 300
 and Static 100, that after a certain distance start to have the same contention
-contention window for farther cars. With small contention windows there is a
-surge of collisions.
+window for farther cars. With small contention windows there is a surge of
+collisions.
