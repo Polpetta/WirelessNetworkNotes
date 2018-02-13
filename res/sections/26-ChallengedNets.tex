@@ -91,9 +91,9 @@ Thus, new TCP protocols were made.
 \label{prt:tcp:hybla}
 
 This protocol equalizes the transmission rate against the RTT, and it's good for
-satellite links. Since the TCP window-based transmission algorithm depends on network delays,
-TCP Hybla proposed to obtain for long RT connections the same instantaneous transmission rate. 
-This can be achieved with two steps:
+satellite links. Since the TCP window-based transmission algorithm depends on
+network delays, TCP Hybla proposed to obtain for long RTT connections the same
+instantaneous transmission rate. This can be achieved with two steps:
 \begin{itemize}
 	\item by making \emph{cwnd} independent of RTT;
 	\item by compensation the effect of the division by RTT.
