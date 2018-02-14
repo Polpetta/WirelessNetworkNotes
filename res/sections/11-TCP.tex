@@ -130,9 +130,10 @@ consider ACKs, which are very small and can be ignored.
 
 The purpose is to adjust changes in the available capacity.
 We actually have an additive increase because we increment the $cw$ by one
-packet per RTT, which is +1 every time an ACK is received and a Multiplicative
-Decrease because, every time a drop is detected via triple-dupacks we set the
-$cw=\frac{cw}{2}$. If we plot the cwnd size (or the KB sent) over time we get a
+packet per cwnd sent completely, which is +1 every time an ACK is received and
+a Multiplicative Decrease because, every time a drop is detected via 
+triple-dupacks we set the $cw=\frac{cw}{2}$.
+If we plot the cwnd size (or the KB sent) over time we get a
 typical saw tooth behavior (Figure~\ref{fig:tcp:sawtooth}). We can see how the
 cwnd grows linearly in time and that TCP sends a cwnd's worth of bytes each RTT.
 
@@ -147,7 +148,7 @@ In practice we have:
 \begin{figure}[t]
 \includegraphics[scale=0.3]{sawtooth.png}
 \caption[Saw tooth shape behavior]{Saw tooth shape behavior. Timeouts cause
-  \textbf{multiplicative decrease (/2)}}
+  \textbf{multiplicative decrease:} cwnd/2}
 \label{fig:tcp:sawtooth}
 \end{figure}
 
