@@ -1,7 +1,7 @@
 #Author: Polonio Davide <poloniodavide@gmail.com>
 #License: GPLv3
 
-OUTPUT_NAME= WirelessNets
+OUTPUT_NAME= WirelessNetworkNotes
 LIST_NAME= listOfSections.tex
 PATH_OF_CONTENTS= res/sections
 MAIN_FILE= main
@@ -10,7 +10,7 @@ JOB_NAME=-jobname='$(OUTPUT_NAME)'
 CCFLAGS= -pdflatex='pdflatex -interaction=nonstopmode' -pdf
 SHELL := /bin/bash #Need bash not shell
 
-all: spellcheck compile
+all: compile
 
 compile:
 	if [[ -a "res/$(LIST_NAME)" ]]; then echo "Removing res/$(LIST_NAME)"; \
@@ -25,7 +25,11 @@ compile:
 spellcheck:
 	./tools/spellcheck.sh
 
+ci: spellcheck compile
+
 clean:
 	git clean -Xfd
 	$(CC) -C $(JOB_NAME)
 	if [[ -a "$(OUTPUT_NAME)" ]]; then rm -rv $(OUTPUT_NAME)/; fi;
+
+.PHONY: compile
