@@ -76,7 +76,7 @@ indicates a packet loss and so we don't need to wait for the timeout to
 retransmit. This is a faster way to detect packet loss, since the name
 \textbf{Fast Retransmit}.
 Instead of waiting $4 \cdot RTT$ we resend after $1 \cdot RTT$, which is after
-three or ore dupacks.
+three or more dupacks.
 Duplicate ACKs can happen due to loss of packets, packets re-ordering or flow
 control window update.
 
