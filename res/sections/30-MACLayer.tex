@@ -112,9 +112,19 @@ transmission when a collision is detected, reducing time wastage. This,
 unfortunately, is \underline{not possible in wireless communications}, but only
 in the wired one.
 
-\paragraph*{SINR} The collision detection is based on the SINR
-(\textit{signal-to-interference-plus-noise ratio}). The formula to calculate
-SINR is:
+\paragraph*{SINR} SINR (\textit{signal-to-interference-plus-noise ratio})
+is commonly used in wireless communication as a way to measure the quality of
+wireless connections. Typically, the energy of a signal fades with distance,
+which is referred to as a path loss in wireless networks.
+Conversely, in wired networks the existence of a wired path between the sender
+or transmitter and the receiver determines the correct reception of data. In a
+wireless network ones has to take other factors into account (e.g. the
+background noise, interfering strength of other simultaneous transmission). The
+concept of SINR attempts to create a representation of this aspect\footnote{
+\url{https://en.wikipedia.org/wiki/Signal-to-interference-plus-noise_ratio}
+}.
+
+The collision detection is based on the SINR and the formula to calculate it is:
 \begin{equation}
 SINR = \frac{Signal\ of\ Interest\ (SoI)}{Interference(I) + Noise(N)}
 \end{equation}
