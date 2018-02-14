@@ -190,7 +190,7 @@ problem.
 \paragraph*{Channel access method}
 MACAW uses CTS and RTS packets to knowing if the channel is free to be used to
 transmit new data. These two types of packets are very small, so it's difficult
-to have a collision trasmitting them.
+to have a collision transmitting them.
 
 \subparagraph*{RTS} \textit{Request to Send} is a frame sent by the
 sender to the receiver before starting a transmission that asks if there are no
@@ -212,7 +212,7 @@ has data to transfer to node B.
 Node A initiates the process by sending a Request to Send frame (RTS) to node B.
 The destination node (node B) replies with a Clear To Send frame (CTS). After
 receiving CTS, node A sends data. After successful reception, node B replies
-with an acknowledgement frame (ACK). If node A has to send more than one data
+with an acknowledgment frame (ACK). If node A has to send more than one data
 fragment, it has to wait a random time after each successful data transfer and
 compete with adjacent nodes for the medium using the RTS/CTS mechanism.
 
@@ -243,7 +243,7 @@ sequence of frames:
 \item ``Clear To Send'' frame (CTS) from B to A
 \item ``Data Sending'' frame (DS) from A to B
 \item DATA fragment frame from A to B, and
-\item Acknowledgement frame (ACK) from B to A.\footnote{
+\item Acknowledgment frame (ACK) from B to A.\footnote{
 Taken from
 \url{https://en.wikipedia.org/wiki/Multiple_Access_with_Collision_Avoidance_for_Wireless}
 }
@@ -332,7 +332,7 @@ The packages transmission order is the following:
 \begin{itemize}
 \item MAC-DCF CSMA/CA (mandatory)
 \item MAC-DCF with RTS/CTS (optional)
-\item MAC-DCF PCF (polling the AP) (optional)
+\item MAC-PCF (polling the AP) (optional)
 \end{itemize}
 
 \paragraph*{CSMA} CSMA doesn't entirely solve the hidden/exposed terminal
