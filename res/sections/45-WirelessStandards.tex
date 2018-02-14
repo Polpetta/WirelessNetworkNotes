@@ -203,7 +203,7 @@ research is going on in particular about routing schemes and MAC layers.
 The mayor application for this wireless standard is \textbf{safe driving}.
 When an incident is detected, alert messages are sent from the Abnormal
 Vehicle\footnote{AV is a vehicle that its behavior is not conform to some
-threshold}\todo{This footnote needs a rewrite} to the following vehicles, via
+threshold}~\todo{This footnote needs a rewrite} to the following vehicles, via
 broadcast. This messages are faster than the normal human reaction, and can
 prevent chained car accidents. How much time does it take to the following
 vehicles to receive the message to start breaking? The latency it's an important
@@ -270,16 +270,18 @@ The problem of this solution is that is slow, and for this is not suitable for
 alert messages (jamming signal phase delays the transmission of the message).
 
 \subsubsection{Fast Broadcast}
-Fast broadcast is designed to have Alert Messages covering the area of interest
+Fast broadcast\footnote{\url{http://www.math.unipd.it/~cpalazzi/lucidi/Read-FastBroadcast.pdf}} 
+is designed to have Alert Messages covering the area of interest
 in less time possible. It uses two type of packets: \textit{Hello messages} and
 \textit{Alert messages}. Hello messages contain the sender's position and the
 maximum forward distance from which another vehicle has been heard transmitting
 another hello message. In particular it contains:
 \begin{itemize}
-\item CMBR (\textit{Current Maximum Backward Range}): the maximum backward
-  distance at which some car would be able to hear me
-\item CMFR (\textit{Current Frontward Range}): the maximum distance from which
-  I have been able to hear another car in front of me
+  \item CMBR (\textit{Current-turn Maximum Back Range}): the estimation of the 
+  maximum frontward distance from which another car along the strip-shaped 
+  area-of-interest can be heard by the considered one;
+  \item CMFR (\textit{Current-turn Maximum Front Range}): the estimation of the
+  maximum backward distance at which the considered car can be heard.
 \end{itemize}
 
 Fast Broadcast has two phases:
@@ -318,10 +320,10 @@ are:
 message is generated, and received by the nearby cars. The cars that received
 the message wait a time that is proportional to the node's position with
 respect to the estimated maximum transmission range. In particular, farthest
-nodes transmit before the others: if another car that is farther from the source
-has already forwarded the alter message, then the considered car abort its
-sending procedure (since the message has already been propagated). The
-contention window during this procedure is calculated in this way:
+nodes transmit before the others. If, while waiting, some of the following cars
+already transmitted the message, preceding ones abort their forwarding 
+countdowns as the message has already been propagated. The contention window 
+during this procedure is calculated in this way:
 \begin{equation}
 \left [ \left ( \frac{MaxRange - Distance}{MaxRange} \cdot (CW_{max} - CW_{min}) \right ) + CW_{min} \right ]
 \end{equation}
