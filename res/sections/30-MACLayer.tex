@@ -355,15 +355,24 @@ problem. The CSMA doesn't work well with the hidden terminal, so a CA
 transmission, RTS and CTS. These packets are very little, thus fast to transmit.
 
 \subparagraph*{Congestion avoidance} The congestion avoidance works in this way:
-\begin{itemize}
-\item DCF: distributed coordination function
-\item Countdown of random back off suspended if the medium is busy (it's not
-  reset!)
-\item The CW (contention window) is \underline{larger}\footnote{Large $cw$ cause
-  large overhead} when there are many nodes, \underline{smaller} if fewer. When
-  a node fails to receive CTS in response to its RTS, it doubles the
-  contention windows.
-\end{itemize}
+there is a countdown determined by a random back off (that's the contention
+window), that tells the node to wait to send. This countdown is suspended if the
+medium is busy (pay attention that doesn't mean that the countdown is reset,
+because it's not!). The congestion avoidance phase starts after the DIFS phase,
+and it is \underline{larger}\footnote{Large $cw$ cause large overhead} when
+there are many nodes, \underline{smaller} if fewer. When a node fails to receive
+CTS in response to its RTS, it can act in different ways. In 802.11, it usually
+doubles it's contention windows, meanwhile in MACAW uses MILD.
+
+\subsubparagraph*{Binary exponential back off} This technique doubles the $cw$,
+up to a maximum of five times. When the first time the node complete a
+transmission the $cw$ is reset to its original $CW_{min}$.
+
+\subsubparagraph*{MILD} MILD\footnote{That means \textit{Multiple Increase
+  Linear Decrease}} has a more conservative approach than Binary exponential
+back off, as it has a slower $cw$ reduction: when a timeout occurs the $cw$ is
+multiplied by $1,5$ and when a transmission is successful it get decreased
+only by one.
 
 \paragraph*{PCF} With this access method the AP announces it in the beacons.
 After associations frames the node announces to the AP whether it's pollable
