@@ -1,0 +1,292 @@
+\chapter{Routing}
+
+Routing determine the ``good''\footnote{The minimum path typically} path
+(sequence of routers) thru network from source to destination.
+Routing protocols use graphs as a mathematical abstraction.
+
+\section{Typologies of routing}
+
+Routing can be \textbf{global}, \textbf{decentralized}, \textbf{static} (where
+the routes change slowly over time) and \textbf{dynamic} (where the routes
+change quickly over time).
+
+\subsection{Global routing}
+
+In this kind of routing routers have the complete topology of the network, with
+information about links cost.
+Characteristics:
+\begin{itemize}
+\item ``link state'' algorithm;
+\item efficient but not feasible;
+\item not feasible.
+\end{itemize}
+
+An example of a global routing algorithm is the one made by Dijkstra.
+
+\subsubsection{Dijkstra's algorithm}
+
+In this iterative algorithm all the nodes know link cost between each
+other. Basically, it computes the path with the lowest cost from one node to
+all the others.
+
+\begin{figure}[H]
+  \captionsetup{singlelinecheck=off}
+  \centering
+  \includegraphics[scale=0.45]{DijkstraAlgo}
+  \caption[Dijkstra's algorithm]{Dijkstra's algorithm. Notation:
+    \begin{itemize}
+    \item $c(x, y)$: link cost from node $x$ to $y$. It's $\infty$ if x has not
+        direct neighbors;
+    \item $D(v)$: current value of cost of path from source to destination $v$;
+    \item $p(v)$: predecessor node along path from source to $v$;
+    \item $N'$: set of nodes whose least cost path is definitively known.
+    \end{itemize}
+  }
+\end{figure}
+
+\subsection{Decentralized routing}
+In this type of routing routers know \textbf{physically-connected} neighbors,
+and link cost to them.
+There is an iterative process of computation and exchange of information with
+neighbors.
+These algorithms are defined as \textbf{``distance vector''} algorithms.
+
+\subsection{Routing based on network typology}
+
+There are different types of routing based on different types of networks.
+
+\paragraph*{Infrastructure based} In this case routing is relatively simple.
+There is just a single hop from the access point (AP) to the wireless node.
+
+\paragraph*{MANET}\footnote{MANET stands for \textit{Metropolitan Area
+    Network}} It's also know as ad-hoc, and has the following
+characteristics:
+\begin{itemize}
+\item the \textbf{network constantly changes},
+\item wireless nodes are \textbf{not} necessarily all adjacent, so data forwarding
+  could be necessary.
+\end{itemize}
+Additionally, there are other difficulties, such as \textbf{energy consumption}
+and \textbf{limited bandwidth} (due to exchange of routing information)
+on mobile systems.
+
+In wireline networks we have symmetric links, limited redundancy and fixed
+topology, instead wireless has asymmetric links and random redundancy with
+unplanned, dynamic links. With all these peculiarities, traditional routing
+algorithms for MANETS are inefficient, and the new one must rely on data link
+information, not just network layer updates\footnote{Layer updates only
+  determine connectivity}, without using centralized approaches because they
+just don't work. In MANETS nodes can be routers, and they can send different
+type of messages between them.
+\subparagraph*{Messages classification} There are different type of messages:
+\begin{itemize}
+\item Unicast: transmission 1 to 1. In order to achieve a good unicast routing
+  protocol there are some goals:
+  \begin{itemize}
+  \item minimal control overhead
+  \item multi-hop path routing capability
+  \item no loops
+  \end{itemize}
+\item Multicast: transmission 1 to N: more than one receiver of the same
+message, that it can follow different paths.
+\item Broadcast: transmission 1 to N: everyone receives the message
+\end{itemize}
+
+\section{Protocols classification}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.3]{AdHocRoutingProtocols}
+  \caption{Tree listing all the ad-hoc routing protocols}
+  \label{fig:mac:adHocRoutingProtocols}
+\end{figure}
+
+As shown in Figure~\ref{fig:mac:adHocRoutingProtocols} protocols can be
+proactive or reactive, and are classified as:
+\begin{itemize}
+\item table-driven (proactive) $\to$ up-to-date routing information are
+  maintained
+\item source-initiated (on demand/demand driven) $\to$ create routes only when
+needed and maintain them until they are no more useful to the source.
+\item hybrid protocols $\to$ combination of proactive and reactive protocols
+\end{itemize}
+
+\subsection{Proactive protocols}
+
+Proactive protocols are based on traditional distance-vector and link-state
+protocols, where each node maintains a route to the other edge of the network.
+This cause a high overhead in most scenarios, but since each node maintains and
+updates its routing table, there is a low packet forwarding latency.
+
+Due the proactive nature, changes to the network topology are immediately
+propagated to all the nodes.
+
+There are different typologies, that will be described below.
+
+\subsubsection{DSDV (Destination Sequenced Distance Vector)}
+
+Based on Bellman-Ford algorithm it has characteristics similar to Dijkstra's
+algorithm, but with \textbf{slower performance and a better versatility}
+(it supports negative weights).
+
+With DSDV, every route has a sequence number and packets are transmitted
+according to the routing table: each node has a routing table with
+all the nodes listed, and each node has its own sequence number.
+Each node periodically transmits updates to keep table consistency.
+When two routes to a destination are received from two different neighbours
+the one with the greatest destination sequence number is chosen, otherwise the
+smallest hop-count is kept.
+Continuously updating the routing table can generate a lot of overhead, and
+there are two ways to carry updates:
+\begin{itemize}
+\item performing a full dump
+\item having incremental updates
+\end{itemize}
+
+\subsubsection{OLSR (optimized link state routing)}
+
+This is based on the link state algorithm. It minimizes flooding of broadcasting
+packets by using only the selected \textit{Multipoint Hop (MH)} called
+\textit{Multipoint relays (MR)}. All links with neighboring MHs are declared and
+are flooded in the entire network. MR minimize the flooding by reducing
+duplicate retransmission.
+
+In general, OLSR is good for large and dense networks.
+
+\subsubsection{CGSR}
+
+In this typology, nodes are organized into a hierarchy of clusters: every
+cluster has a \textit{cluster master (clusterhead)} that forward packets from
+the other sets node using DSDV.
+
+\subsection{Reactive protocols}
+The source builds routing on demand with a ``flooding'' method, but maintains
+only active routes.
+Advantages:
+\begin{itemize}
+\item less overhead
+\item better scaling properties
+\item route acquisition latency
+\end{itemize}
+
+Source-initiated on-demand routing protocols have the following characteristics:
+\begin{itemize}
+\item route created only when needed
+\item flooding is used in order to find routes
+\item router maintenance procedure is used to repair broken routes
+\end{itemize}
+
+\subsubsection{AODV (Ad hoc On-Demand Distance Vector Routing)}
+
+This routing protocol, based on DSDV, exchange the routing table only along a
+given route. In order to discover routes, there is a specific package, RREQ
+(\textit{Route Request Packet}). The packet is sent from the sender to the
+receiver, and when it's received, a RREP(\textit{Route Replay Packet}) is sent
+back to the source, creating a path.
+
+Routes are timed: after a while they expire: unicast and multicast routes are
+kept until a timeout happens.
+
+\paragraph*{Properties} AODV's properties:
+\begin{itemize}
+\item discovers routes as and where necessary
+\item routes are maintained just as long as necessary
+\item sequence number increases every time the node notices changes in the neighbourhood topology
+\end{itemize}
+
+\paragraph*{How a package is sent} AODV use the following procedure to send a
+packet:
+\begin{enumerate}
+\item check routing table to determine if the current route to destination is
+  present. If so, forward the packet to the next hop, otherwise, go to step 2.
+\item begin route discovery process with an RREQ \footnote{
+  This packet is initially sent with a small time-to-live (TTL), to limit its
+  propagation and avoid an excessive flooding.
+  The packet contains:
+  \begin{itemize}
+  \item source node's IP address
+  \item source node's current sequence number
+  \item destination IP address
+  \item destination sequence number
+  \end{itemize}
+}
+\item once an intermediate node receives a RREQ, the node sets up a reverse
+  route entry for the source node in its route table.
+\item when RREQ reaches destination in order to respond to RREQ a node should
+  have it in its route table (the route has to be unexpired). If conditions are
+  true the node responds to RREQ by sending a RREP back using unicasting
+  and not flooding to the source (using reverse path), otherwise the hop count
+  is incremented and the packet broadcast to its neighbors. Eventually, the
+  RREQ will be able to reach the destination. Intermediate nodes can send an
+  RREQ if they know a more recent path of the one previously known to senders.
+\end{enumerate}
+
+\paragraph*{Broadcast} The broadcast is performed by flooding the network, and
+a sequence number on the packets is used to stop loops from happening, meaning
+that a package could expire without have reached the destination. To solve this
+problem, the life of a packet can be augmented, changing its time-to-live (TTL).
+Using the flooding to broadcast packets has the following pros:
+\begin{itemize}
+\item simplicity
+\item efficient when overhead for route discovery is higher than the data
+  transferred
+  \item potential higher reliability of data delivery
+\end{itemize}
+...but it has some cons too:
+\begin{itemize}
+\item very high overhead potentially (in the worst case, all nodes reachable from
+sender may receive the packet)
+\item possibility of collision during packet propagation (despite the flooding, the
+destination may not receive the packet at all, if collision happens!)
+\end{itemize}
+
+\subsubsection{DSR (Dynamic Source Routing)}
+
+With this ad-hoc routing protocol nodes maintains route caches, and the full
+source-route is aggregated in RREQ and sent back in RREP. \textbf{Each data packet
+has full source route}, causing a little overhead increment.
+Route discovery starts when the sender initiates requests and intermediate nodes
+add their address onto request so that when the packet reaches destination it
+contains all the full path.
+
+\paragraph*{Differences with AODV} Being similar to AODV, it has the following
+differences:
+\begin{itemize}
+\item DSR includes source routes, having large headers (and suffering degraded
+  performances)
+\item AODV keeps routing tables temporarily
+\item AODV keeps routes only between nodes which need to communicate with
+\item DSR route cached entries don't expire
+\end{itemize}
+
+\section{Other routing \& metrics}
+
+\subsection{Routing protocols}
+
+\paragraph*{Signal stability routing} Here, the signal strength is used as
+metric, in combination with a DSR-like routing. RREQ is forwarded only if the
+packet is received over a link with good signal strength.
+
+\paragraph*{Geographic routing protocols} These protocols use location. In
+particular, GPSR (greedy perimeter stateless routing) has the following
+properties:
+\begin{itemize}
+\item location of the destination node is assumed to be known
+\item each node knows location of its neighbours $\to$ packets are forwarded to
+  the closest one
+\item if there is a ``hole'' in the graph, use perimeter routing (right-hand
+rule) \todo{Maybe this role could be explained a little bit.}
+\end{itemize}
+
+\subsection{Metrics}
+
+\paragraph*{Associativity-based} \todo{This part is confused, check this out!}
+Defines metric with a ``degree of association stability'' (with how many
+frequency do I move from my neighbours?). Nodes with less mobility or better
+links have higher stability volume.
+
+\paragraph*{Expected Transmission Time (ETT)} This metric is easier to compute
+than the signal strength, and it can be more useful.
+
+\paragraph*{Weighted cumulative expected transmission time} This metric is
+better for multi-radio and asymmetric route links.
