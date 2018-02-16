@@ -259,7 +259,9 @@ Taken from
 }
 \end{enumerate}
 
-\subparagraph*{MILD Algorithm} MACAW uses contention windows (\textit{cw}) to
+
+\subparagraph*{MILD\footnote{That means \textit{Multiple Increase
+  Linear Decrease}} Algorithm} MACAW uses contention windows (\textit{cw}) to
 determine the packet transmission rate. When a node fails to receive CTS in
 response to its RTS it multiplies his contention window by $1.5$. This approach
 is less aggressive than 802.11, which multiplies by $2$. When a node
@@ -269,6 +271,7 @@ wild oscillation of the contention window when congestion is high.
 The congestion window helps with the fairness: when a node transmits the
 packet it appends its current congestion windows, that is used by the others
 for future transmission output.
+\label{subp:mac:mild}
 
 \paragraph*{Fairness}
 There are two main ways to establish fairness in MACAW, via \textit{Weighted
@@ -368,11 +371,7 @@ doubles it's contention windows, meanwhile in MACAW uses MILD.
 up to a maximum of five times. When the first time the node complete a
 transmission the $cw$ is reset to its original $CW_{min}$.
 
-\subsubparagraph*{MILD} MILD\footnote{That means \textit{Multiple Increase
-  Linear Decrease}} has a more conservative approach than Binary exponential
-back off, as it has a slower $cw$ reduction: when a timeout occurs the $cw$ is
-multiplied by $1,5$ and when a transmission is successful it get decreased
-only by one.
+\subsubparagraph*{MILD} See~\ref{subp:mac:mild}
 
 \paragraph*{PCF} With this access method the AP announces it in the beacons.
 After associations frames the node announces to the AP whether it's pollable
