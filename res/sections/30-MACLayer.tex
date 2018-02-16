@@ -340,9 +340,13 @@ The packages transmission order is the following:
 \subsection{Access methods}
 802.11 has different access methods:
 \begin{itemize}
-\item MAC-DCF CSMA/CA (mandatory)
+\item MAC-\mKeyword{DCF}\footnote{
+DCF means \textit{distributed coordination  function}
+} CSMA/CA (mandatory)
 \item MAC-DCF with RTS/CTS (optional)
-\item MAC-PCF (polling the AP) (optional)
+\item MAC-\mKeyword{PCF}\footnote{
+PCF means \textit{point coordination function}
+} (polling the AP) (optional)
 \end{itemize}
 
 \paragraph*{CSMA} CSMA doesn't entirely solve the hidden/exposed terminal
@@ -352,7 +356,7 @@ transmission, RTS and CTS. These packets are very little, thus fast to transmit.
 
 \subparagraph*{Congestion avoidance} The congestion avoidance works in this way:
 \begin{itemize}
-\item DCF: distributed control function
+\item DCF: distributed coordination function
 \item Countdown of random back off suspended if the medium is busy (it's not
   reset!)
 \item The CW (contention window) is \underline{larger}\footnote{Large $cw$ cause
