@@ -4,6 +4,17 @@ WiFi
 WiMax
 dupAcks
 TCP
+retransmission
+Jitter
+jitter
+goodputs
+maxTCPRate
+UDPTraffic
+TCPFlows
+clientAdvertiseWindow
+RRT
+RTTs
+UDP
 TDMA
 FDMA
 CDMA
