@@ -1,0 +1,81 @@
+\chapter{Introduction}
+Wireless Networks popularity is growing over the years, with Internet 
+and laptop use exploding. We are experiencing a demand for both low and high 
+rate data, with smartphones having opened new wireless scenarios. We now talk of 
+Web 2.0, where people can modify and upload new data and Web Squared, where 
+sensors and machines generate and upload data. Think of Google Maps using your 
+phone to detect traffic levels.
+	
+We envision a future with ubiquitous communication among people and 
+devices, all thanks to WN. But, we can't forget that WN, while having a lot of 
+potential and being used in a lot of different applications pose a series of 
+challenges one cannot ignore:
+	 
+\begin{itemize}
+\item Wireless channels are a difficult and capacity-limited 
+  communication medium, and wired connections will always be better;
+\item Wireless Networks are very hard to plan: the position of 
+  the nodes changes and you often don't have patterns you can exploit to design 
+  them. Also, WN can be very heterogeneous;
+\item Energy and delay: having a shared channels with rules, 
+  usually hard to implement, to regulate traffic naturally leads to delays. As
+  for energy, don't forget we are dealing with a mobile device with a limited
+  amount of battery.
+\end{itemize}
+
+We can see an overview of multimedia different requirements in 
+Table~\ref{tab:intro:mmreq}.
+
+\begin{table}[t]
+\centering
+\begin{tabular}{l|l|l|l|l|}
+\cline{2-5}
+                     & \textbf{Voice} & \textbf{Data} & \textbf{Video} & \textbf{Game}  \\ \hline 
+\textbf{Delay}       & \textless100ms &               & \textless100ms & \textless100ms \\ \hline
+\textbf{Packet Loss} & \textless1\%   & 0             & \textless1\%   & \textless1\%   \\ \hline
+\textbf{BER}         & 10-3           & 10-6          & 10-6           & 10-3           \\ \hline
+\textbf{Data Rate}   & 8-32Kbps       & 1-100Mbps     & 1-20Mbps       & 32-100Kbps     \\ \hline
+\textbf{Traffic}     & Continuous     & Bursty        & Continuous     & Continuous     \\ \hline
+\end{tabular}
+\caption{Multimedia Requirements}
+\label{tab:intro:mmreq}
+\end{table}
+
+From this table it is clear that one-size-fits-all protocols and 
+designed, used in wired networks, do not work well with WN.
+More in detail:
+
+\begin{itemize}
+\item Delay: for video, \textless100 ms if we have interactive 
+  videos, otherwise we can afford a bit more (voice is more important).
+  In games, jitter may not be a problem if I am delaying with 
+  constant jitter and have a specific type of game (for example: race games) 
+  because the player adapts to the jitter, reacting a bit earlier.
+\item Packet Loss: for all media types except data, we can in 
+  reality tolerate up to 5\%. For examples, in games not all data is equally 
+  important, we can afford losing the less important ones and still be satisfied 
+  with the overall game experience. Also for voice, even with 5\% loss I can
+  still understand well.
+\item Bit Error Rate: we assume that, when we lose a bit, we 
+  lose the whole packet.Voice packets are sent very frequently and are very
+  small, that's why we have a high BER, while for video the packets are bigger.
+  Games are similar to VoIP.
+\item Data Rate: indicates how much bandwidth we are consuming.
+\item Type of Traffic: for voice, video and games, we have a 
+  device transmitting an uninterrupted stream (even though video only transmits
+  in 1 direction). Data is different, we don-t care for every single packet we
+  are downloading, we are interested in the total time of the complete thing.
+  That's also why we require 0 packet loss. 
+\end{itemize}
+
+\paragraph*{Crosslayer Design} When dealing with the different network 
+layers, we can decide to keep them strictly separated, with no communication and 
+information exchanged between them. That means, we have different layers with 
+different functionalities that work together without overlapping. The Crosslayer 
+Design blurs the separation between layers, allowing information in one layer to 
+become available to other layers too. This means we adapt across deign layers, 
+reducing uncertainty through scheduling and providing robustness via diversity.
+On one hand, one could argue that this messes up and complicates the 
+code but, on the other, better communication can lead to higher performances. In 
+WN, Crosslayer Design is not seen badly and therefore quite commonly used.
+

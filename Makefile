@@ -1,7 +1,7 @@
 #Author: Polonio Davide <poloniodavide@gmail.com>
 #License: GPLv3
 
-OUTPUT_NAME= WirelessNets
+OUTPUT_NAME= WirelessNetworkNotes
 LIST_NAME= listOfSections.tex
 PATH_OF_CONTENTS= res/sections
 MAIN_FILE= main
@@ -24,6 +24,12 @@ compile:
 
 spellcheck:
 	./tools/spellcheck.sh
+
+watch:
+	while true; do \
+		make --silent; \
+		inotifywait -qre close_write res/sections; \
+	done
 
 ci: spellcheck compile
 
