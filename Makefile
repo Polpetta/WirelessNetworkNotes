@@ -27,13 +27,6 @@ compile:
 spellcheck:
 	@./tools/spellcheck.sh
 
-
-watch:
-	while true; do \
-		make --silent; \
-		inotifywait -qre close_write res/sections; \
-	done
-
 ci: spellcheck compile
 
 watch:
