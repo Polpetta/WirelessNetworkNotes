@@ -4,6 +4,10 @@ WiFi
 WiMax
 dupAcks
 TCP
+Nano
+nano
+plasmoids
+chemotaxis
 WPAN
 smartphones
 RFCOMM
@@ -223,4 +227,3 @@ ok
 cwnd
 DTN
 IPSec
-
