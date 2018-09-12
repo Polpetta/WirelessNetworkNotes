@@ -57,6 +57,10 @@ the speed of transmission, and \mKeyword{goodput} that is the speed of reception
 \paragraph*{Aggressive Retransmission} With dupacks, when Vegas receives the
 first dupack or the second dupacks, it checks the fine grained timer expiry.
 This helps in wireless environments with non congestion loss.
+The retransmission activation happens when
+\begin{equation*}
+(currentTime - sendingTime) + RTT_{min} > TimeoutValue
+\end{equation*}
 
 \paragraph*{Aggressive Window Adaptation} With recovery, the cwnd is divided by
 four instead of two when it enters into recovery. With multiple loss, in case of
@@ -65,8 +69,8 @@ cwnd is initially set to 2 instead of 1.
 
 \paragraph*{Modified SS phase} The formulas for throughput are the same
 of~\ref{eq:tcpvegas:extr} and~\ref{eq:tcpvegas:actr}, but they're calculated in
-every alternate RTT instead of once every RTT. There is a new parameter, $\gamma$,
-that's calculated as $\gamma = \frac{1pkts}{RTT}$, having that if:
+every alternate RTT instead of once every RTT. There is a new parameter,
+$\gamma$, that's calculated as $\gamma = \frac{1pkts}{RTT}$, having that if:
 \begin{itemize}
 \item $Expected - Actual < \gamma \to$ continue using slow start
 \item $Expected - Actual > \gamma \to$ switch to congestion avoidance

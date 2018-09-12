@@ -227,3 +227,7 @@ ok
 cwnd
 DTN
 IPSec
+currentTime
+sendingTime
+TimeoutValue
+IPSec
