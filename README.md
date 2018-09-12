@@ -1,6 +1,6 @@
 # Wireless Networks Notes
 
-[![Build Status](https://travis-ci.org/EmanueleC/WirelessNetworkNotes.svg?branch=develop)](https://travis-ci.org/EmanueleC/WirelessNetworkNotes)
+[![Build Status](https://travis-ci.org/Polpetta/WirelessNetworkNotes.svg?branch=develop)](https://travis-ci.org/Polpetta/WirelessNetworkNotes)
 
 Wireless Networks notes based on computer science lectures held in University of Padua, Italy.
 
