@@ -28,5 +28,5 @@ deploy:
   file: WirelessNetworkNotes.pdf
   skip_cleanup: true
   on:
-    repo: EmanueleC/WirelessNetworkNotes
+    repo: Polpetta/WirelessNetworkNotes
     tags: true
